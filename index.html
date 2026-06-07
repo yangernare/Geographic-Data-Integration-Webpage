@@ -365,13 +365,13 @@
     <!-- Page Loader -->
     <div class="page-loader" id="pageLoader">
         <div class="loader-ring"></div>
-        <div class="text-geo-muted text-sm">GeoNavigator 加载中...</div>
+        <div class="text-geo-muted text-sm" data-i18n="loader.text">GeoNavigator 加载中...</div>
     </div>
 
     <!-- Processing Overlay -->
     <div class="processing-overlay" id="processingOverlay">
         <div class="loader-ring"></div>
-        <div class="text-geo-text text-sm" id="processingText">正在处理，请稍候...</div>
+        <div class="text-geo-text text-sm" id="processingText" data-i18n="loader.processing">正在处理，请稍候...</div>
     </div>
 
     <!-- Toast Container -->
@@ -395,26 +395,29 @@
         <!-- Center: Tabs -->
         <nav class="hidden md:flex items-center gap-1 ml-8">
             <button class="nav-tab active px-4 py-2 text-sm font-medium rounded-md hover:bg-geo-hover" data-tab="sources" onclick="switchTab('sources')">
-                <i class="fas fa-database mr-2"></i>数据源
+                <i class="fas fa-database mr-2"></i><span data-i18n="nav.sources">数据源</span>
             </button>
             <button class="nav-tab px-4 py-2 text-sm font-medium rounded-md hover:bg-geo-hover text-geo-muted" data-tab="preprocess" onclick="switchTab('preprocess')">
-                <i class="fas fa-cogs mr-2"></i>预处理
+                <i class="fas fa-cogs mr-2"></i><span data-i18n="nav.preprocess">预处理</span>
             </button>
             <button class="nav-tab px-4 py-2 text-sm font-medium rounded-md hover:bg-geo-hover text-geo-muted" data-tab="about" onclick="switchTab('about')">
-                <i class="fas fa-info-circle mr-2"></i>关于
+                <i class="fas fa-info-circle mr-2"></i><span data-i18n="nav.about">关于</span>
             </button>
         </nav>
 
-        <!-- Right: Search + MiMo -->
+        <!-- Right: Search + Lang + MiMo -->
         <div class="ml-auto flex items-center gap-2">
             <button id="globalSearchBtn" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-geo-hover border border-geo-border text-geo-dim text-sm hover:border-geo-muted transition-colors" onclick="focusSearch()">
                 <i class="fas fa-search text-xs"></i>
-                <span>搜索数据源...</span>
+                <span data-i18n="nav.search">搜索数据源...</span>
                 <kbd class="ml-4 text-xs bg-geo-bg px-1.5 py-0.5 rounded border border-geo-border">Ctrl+K</kbd>
+            </button>
+            <button id="langToggle" onclick="toggleLanguage()" class="px-2.5 py-1.5 rounded-lg bg-geo-hover border border-geo-border text-geo-muted text-xs font-medium hover:border-geo-blue hover:text-geo-blue transition-colors" title="切换语言 / Toggle Language">
+                <i class="fas fa-globe mr-1"></i><span id="langLabel">EN</span>
             </button>
             <button id="aiToggleBtn" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-geo-purple/10 border border-geo-purple/30 text-geo-purple text-sm hover:bg-geo-purple/20 transition-colors" onclick="toggleChatDialog()">
                 <i class="fas fa-robot"></i>
-                <span class="hidden sm:inline">AI 助手</span>
+                <span class="hidden sm:inline" data-i18n="nav.ai">AI 助手</span>
             </button>
         </div>
     </header>
@@ -423,19 +426,19 @@
     <div class="md:hidden fixed bottom-0 left-0 right-0 h-14 bg-geo-card/95 backdrop-blur-md border-t border-geo-border z-50 flex items-center justify-around px-4">
         <button class="mobile-tab active flex flex-col items-center gap-1 text-geo-blue" data-tab="sources" onclick="switchTab('sources')">
             <i class="fas fa-database text-lg"></i>
-            <span class="text-xs">数据源</span>
+            <span class="text-xs" data-i18n="nav.sources">数据源</span>
         </button>
         <button class="mobile-tab flex flex-col items-center gap-1 text-geo-dim" data-tab="preprocess" onclick="switchTab('preprocess')">
             <i class="fas fa-cogs text-lg"></i>
-            <span class="text-xs">预处理</span>
+            <span class="text-xs" data-i18n="nav.preprocess">预处理</span>
         </button>
         <button class="mobile-tab flex flex-col items-center gap-1 text-geo-dim" data-tab="about" onclick="switchTab('about')">
             <i class="fas fa-info-circle text-lg"></i>
-            <span class="text-xs">关于</span>
+            <span class="text-xs" data-i18n="nav.about">关于</span>
         </button>
         <button class="mobile-tab flex flex-col items-center gap-1 text-geo-purple" onclick="toggleChatDialog()">
             <i class="fas fa-robot text-lg"></i>
-            <span class="text-xs">AI 助手</span>
+            <span class="text-xs" data-i18n="nav.ai">AI 助手</span>
         </button>
     </div>
 
@@ -448,7 +451,7 @@
         <aside id="sidebar" class="sidebar w-72 bg-geo-card border-r border-geo-border flex-shrink-0 flex flex-col overflow-hidden fixed lg:relative top-14 bottom-0 md:bottom-0 z-30 -translate-x-full lg:translate-x-0 transition-transform">
             <!-- Sidebar Header -->
             <div class="sidebar-header flex items-center justify-between p-4 border-b border-geo-border">
-                <span class="sidebar-text text-sm font-medium text-geo-muted">筛选与分类</span>
+                <span class="sidebar-text text-sm font-medium text-geo-muted" data-i18n="sidebar.title">筛选与分类</span>
                 <button class="lg:hidden text-geo-muted hover:text-geo-text" onclick="closeSidebar()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -458,7 +461,7 @@
             <div class="p-3">
                 <div class="relative">
                     <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-geo-dim text-sm"></i>
-                    <input id="searchInput" type="text" placeholder="搜索平台名称、数据类型..."
+                    <input id="searchInput" type="text" data-i18n-placeholder="sidebar.search" placeholder="搜索平台名称、数据类型..."
                         class="w-full pl-9 pr-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text placeholder-geo-dim focus:outline-none focus:border-geo-blue transition-colors"
                         oninput="handleSearch(this.value)">
                 </div>
@@ -468,29 +471,29 @@
             <div class="flex-1 overflow-y-auto p-3 space-y-4 sidebar-text">
                 <!-- Data Type Filter -->
                 <div>
-                    <h3 class="text-xs font-medium text-geo-dim uppercase tracking-wider mb-2">数据类型</h3>
+                    <h3 class="text-xs font-medium text-geo-dim uppercase tracking-wider mb-2" data-i18n="sidebar.dataType">数据类型</h3>
                     <div id="dataTypeFilters" class="flex flex-wrap gap-1.5"></div>
                 </div>
                 <!-- Region Filter -->
                 <div>
-                    <h3 class="text-xs font-medium text-geo-dim uppercase tracking-wider mb-2">区域</h3>
+                    <h3 class="text-xs font-medium text-geo-dim uppercase tracking-wider mb-2" data-i18n="sidebar.region">区域</h3>
                     <div id="regionFilters" class="flex flex-wrap gap-1.5"></div>
                 </div>
                 <!-- Access Filter -->
                 <div>
-                    <h3 class="text-xs font-medium text-geo-dim uppercase tracking-wider mb-2">访问方式</h3>
+                    <h3 class="text-xs font-medium text-geo-dim uppercase tracking-wider mb-2" data-i18n="sidebar.access">访问方式</h3>
                     <div id="accessFilters" class="flex flex-wrap gap-1.5"></div>
                 </div>
                 <!-- Clear Filters -->
                 <button class="w-full py-2 text-xs text-geo-dim hover:text-geo-blue transition-colors border border-geo-border rounded-lg hover:border-geo-blue" onclick="clearFilters()">
-                    <i class="fas fa-times mr-1"></i>清除所有筛选
+                    <i class="fas fa-times mr-1"></i><span data-i18n="sidebar.clear">清除所有筛选</span>
                 </button>
             </div>
 
             <!-- Result Count -->
             <div class="p-3 border-t border-geo-border sidebar-text">
                 <div class="text-xs text-geo-dim">
-                    找到 <span id="resultCount" class="text-geo-blue font-medium">0</span> 个数据源
+                    <span data-i18n="sidebar.foundPre">找到</span> <span id="resultCount" class="text-geo-blue font-medium">0</span> <span data-i18n="sidebar.found">个数据源</span>
                 </div>
             </div>
         </aside>
@@ -501,22 +504,22 @@
             <div id="sourcesModule" class="p-4 lg:p-6">
                 <!-- Module Header -->
                 <div class="mb-6">
-                    <h1 class="text-2xl lg:text-3xl font-bold mb-2">地理空间数据源</h1>
-                    <p class="text-geo-muted text-sm max-w-2xl">聚合全球 <span class="text-geo-blue font-medium">50+</span> 个主流地理空间数据平台，中国平台优先展示，一键导航到你需要的数据</p>
+                    <h1 class="text-2xl lg:text-3xl font-bold mb-2" data-i18n="sources.title">地理空间数据源</h1>
+                    <p class="text-geo-muted text-sm max-w-2xl" data-i18n="sources.desc">聚合全球 <span class="text-geo-blue font-medium">50+</span> 个主流地理空间数据平台，中国平台优先展示，一键导航到你需要的数据</p>
                 </div>
                 <!-- Stats Overview -->
                 <div class="stats-bar" id="statsBar">
                     <div class="stat-card">
                         <div class="stat-value text-geo-blue" id="statTotal">51</div>
-                        <div class="stat-label">数据源</div>
+                        <div class="stat-label" data-i18n="sources.total">数据源</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value text-red-400" id="statChina">32</div>
-                        <div class="stat-label">中国平台</div>
+                        <div class="stat-label" data-i18n="sources.china">中国平台</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value text-geo-purple" id="statGlobal">19</div>
-                        <div class="stat-label">国际平台</div>
+                        <div class="stat-label" data-i18n="sources.global">国际平台</div>
                     </div>
                 </div>
                 <!-- Source Cards Grid -->
@@ -524,22 +527,22 @@
                 <!-- Empty State -->
                 <div id="emptyState" class="hidden text-center py-20">
                     <i class="fas fa-search text-4xl text-geo-dim mb-4"></i>
-                    <p class="text-geo-muted">未找到匹配的数据源</p>
-                    <p class="text-geo-dim text-sm mt-1">尝试调整搜索关键词或筛选条件</p>
+                    <p class="text-geo-muted" data-i18n="sources.empty">未找到匹配的数据源</p>
+                    <p class="text-geo-dim text-sm mt-1" data-i18n="sources.emptyHint">尝试调整搜索关键词或筛选条件</p>
                 </div>
             </div>
 
             <!-- Preprocess Module -->
             <div id="preprocessModule" class="p-4 lg:p-6 hidden">
                 <div class="mb-6">
-                    <h1 class="text-2xl font-bold mb-2">遥感数据预处理</h1>
-                    <p class="text-geo-muted text-sm">基于 GDAL WebAssembly 的浏览器端遥感影像处理工具</p>
+                    <h1 class="text-2xl font-bold mb-2" data-i18n="preprocess.title">遥感数据预处理</h1>
+                    <p class="text-geo-muted text-sm" data-i18n="preprocess.desc">基于 GDAL WebAssembly 的浏览器端遥感影像处理工具</p>
                 </div>
 
                 <!-- GDAL Status -->
                 <div id="gdalStatus" class="mb-4 p-3 rounded-lg bg-geo-card border border-geo-border flex items-center gap-3">
                     <div class="pulse-dot bg-geo-orange"></div>
-                    <span class="text-sm text-geo-muted">GDAL 引擎未加载 — 切换到此页面时将自动初始化</span>
+                    <span class="text-sm text-geo-muted" data-i18n="preprocess.gdalLoading">GDAL 引擎未加载 — 切换到此页面时将自动初始化</span>
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
@@ -548,29 +551,29 @@
                         <!-- Upload Area -->
                         <div id="uploadArea" class="drag-area rounded-xl p-8 text-center cursor-pointer bg-geo-card" onclick="document.getElementById('fileInput').click()">
                             <i class="fas fa-cloud-upload-alt text-3xl text-geo-dim mb-3"></i>
-                            <p class="text-sm text-geo-muted mb-1">拖拽文件到此处或点击上传</p>
-                            <p class="text-xs text-geo-dim">支持 GeoTIFF, ENVI, HDF, JPEG2000 等格式</p>
+                            <p class="text-sm text-geo-muted mb-1" data-i18n="preprocess.upload">拖拽文件到此处或点击上传</p>
+                            <p class="text-xs text-geo-dim" data-i18n="preprocess.uploadHint">支持 GeoTIFF, ENVI, HDF, JPEG2000 等格式</p>
                             <input id="fileInput" type="file" class="hidden" accept=".tif,.tiff,.img,.hdf,.hdf5,.ntf,.jp2,.kea,.bil,.png,.jpg" onchange="handleFileUpload(this.files)">
                         </div>
 
                         <!-- File Info -->
                         <div id="fileInfoPanel" class="hidden rounded-xl bg-geo-card border border-geo-border p-4">
                             <h3 class="text-sm font-medium mb-3 flex items-center gap-2">
-                                <i class="fas fa-file-alt text-geo-blue"></i>文件信息
+                                <i class="fas fa-file-alt text-geo-blue"></i><span data-i18n="preprocess.fileInfo">文件信息</span>
                             </h3>
                             <div id="fileInfoContent" class="space-y-2 text-sm"></div>
                             <button class="mt-3 w-full py-2 text-xs text-geo-red hover:bg-geo-red/10 rounded-lg border border-geo-red/30 transition-colors" onclick="clearFile()">
-                                <i class="fas fa-trash-alt mr-1"></i>移除文件
+                                <i class="fas fa-trash-alt mr-1"></i><span data-i18n="preprocess.removeFile">移除文件</span>
                             </button>
                         </div>
 
                         <!-- Processing History -->
                         <div id="historyPanel" class="rounded-xl bg-geo-card border border-geo-border p-4">
                             <h3 class="text-sm font-medium mb-3 flex items-center gap-2">
-                                <i class="fas fa-history text-geo-green"></i>处理记录
+                                <i class="fas fa-history text-geo-green"></i><span data-i18n="preprocess.history">处理记录</span>
                             </h3>
                             <div id="historyList" class="space-y-2 text-xs text-geo-dim max-h-48 overflow-y-auto">
-                                <p class="text-center py-4">暂无处理记录</p>
+                                <p class="text-center py-4" data-i18n="preprocess.noHistory">暂无处理记录</p>
                             </div>
                         </div>
                     </div>
@@ -581,22 +584,22 @@
                             <!-- Tool Tabs -->
                             <div class="flex flex-wrap border-b border-geo-border p-2 gap-1">
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="format" onclick="selectTool('format')">
-                                    <i class="fas fa-exchange-alt mr-1"></i>格式转换
+                                    <i class="fas fa-exchange-alt mr-1"></i><span data-i18n="tool.format">格式转换</span>
                                 </button>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="clip" onclick="selectTool('clip')">
-                                    <i class="fas fa-crop-alt mr-1"></i>裁剪
+                                    <i class="fas fa-crop-alt mr-1"></i><span data-i18n="tool.clip">裁剪</span>
                                 </button>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="reproject" onclick="selectTool('reproject')">
-                                    <i class="fas fa-globe mr-1"></i>重投影
+                                    <i class="fas fa-globe mr-1"></i><span data-i18n="tool.reproject">重投影</span>
                                 </button>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="bands" onclick="selectTool('bands')">
-                                    <i class="fas fa-layer-group mr-1"></i>波段提取
+                                    <i class="fas fa-layer-group mr-1"></i><span data-i18n="tool.bands">波段提取</span>
                                 </button>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="resample" onclick="selectTool('resample')">
-                                    <i class="fas fa-th mr-1"></i>重采样
+                                    <i class="fas fa-th mr-1"></i><span data-i18n="tool.resample">重采样</span>
                                 </button>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="calibrate" onclick="selectTool('calibrate')">
-                                    <i class="fas fa-sliders-h mr-1"></i>辐射定标
+                                    <i class="fas fa-sliders-h mr-1"></i><span data-i18n="tool.calibrate">辐射定标</span>
                                 </button>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="ndvi" onclick="selectTool('ndvi')">
                                     <i class="fas fa-leaf mr-1"></i>NDVI
@@ -613,20 +616,20 @@
                                 </button>
                                 <div class="w-px h-5 bg-geo-border mx-1 self-center"></div>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="histogram" onclick="selectTool('histogram')">
-                                    <i class="fas fa-chart-bar mr-1"></i>直方图均衡化
+                                    <i class="fas fa-chart-bar mr-1"></i><span data-i18n="tool.histogram">直方图均衡化</span>
                                 </button>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="stretch" onclick="selectTool('stretch')">
-                                    <i class="fas fa-arrows-alt-h mr-1"></i>对比度拉伸
+                                    <i class="fas fa-arrows-alt-h mr-1"></i><span data-i18n="tool.stretch">对比度拉伸</span>
                                 </button>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="sharpen" onclick="selectTool('sharpen')">
-                                    <i class="fas fa-magic mr-1"></i>锐化
+                                    <i class="fas fa-magic mr-1"></i><span data-i18n="tool.sharpen">锐化</span>
                                 </button>
                                 <div class="w-px h-5 bg-geo-border mx-1 self-center"></div>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="lowpass" onclick="selectTool('lowpass')">
-                                    <i class="fas fa-smooth mr-1"></i>低通滤波
+                                    <i class="fas fa-smooth mr-1"></i><span data-i18n="tool.lowpass">低通滤波</span>
                                 </button>
                                 <button class="tool-btn px-3 py-1.5 rounded-lg text-xs border border-transparent text-geo-muted" data-tool="highpass" onclick="selectTool('highpass')">
-                                    <i class="fas fa-edge mr-1"></i>高通滤波
+                                    <i class="fas fa-edge mr-1"></i><span data-i18n="tool.highpass">高通滤波</span>
                                 </button>
                             </div>
 
@@ -634,7 +637,7 @@
                             <div id="toolContent" class="p-4">
                                 <div class="text-center py-12 text-geo-dim">
                                     <i class="fas fa-tools text-3xl mb-3"></i>
-                                    <p class="text-sm">请先上传文件，然后选择处理工具</p>
+                                    <p class="text-sm" data-i18n="preprocess.toolPlaceholder">请先上传文件，然后选择处理工具</p>
                                 </div>
                             </div>
                         </div>
@@ -650,31 +653,31 @@
                             <i class="fas fa-globe text-white text-2xl"></i>
                         </div>
                         <h1 class="text-3xl font-bold mb-2">GeoNavigator</h1>
-                        <p class="text-geo-muted">地理空间数据导航与预处理平台</p>
-                        <p class="text-geo-dim text-sm mt-1">版本 1.0.0</p>
+                        <p class="text-geo-muted" data-i18n="about.subtitle">地理空间数据导航与预处理平台</p>
+                        <p class="text-geo-dim text-sm mt-1" data-i18n="about.version">版本 1.0.0</p>
                     </div>
 
                     <div class="space-y-6">
                         <!-- Features -->
                         <div class="rounded-xl bg-geo-card border border-geo-border p-6">
                             <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
-                                <i class="fas fa-star text-geo-orange"></i>核心功能
+                                <i class="fas fa-star text-geo-orange"></i><span data-i18n="about.features">核心功能</span>
                             </h2>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div class="p-4 rounded-lg bg-geo-bg border border-geo-border">
                                     <i class="fas fa-database text-geo-blue text-xl mb-2"></i>
-                                    <h3 class="font-medium text-sm mb-1">数据源导航</h3>
-                                    <p class="text-xs text-geo-muted">聚合 50+ 全球地理空间数据平台，中国平台优先展示，支持搜索与分类筛选</p>
+                                    <h3 class="font-medium text-sm mb-1" data-i18n="about.f1.title">数据源导航</h3>
+                                    <p class="text-xs text-geo-muted" data-i18n="about.f1.desc">聚合 50+ 全球地理空间数据平台，中国平台优先展示，支持搜索与分类筛选</p>
                                 </div>
                                 <div class="p-4 rounded-lg bg-geo-bg border border-geo-border">
                                     <i class="fas fa-cogs text-geo-green text-xl mb-2"></i>
-                                    <h3 class="font-medium text-sm mb-1">遥感预处理</h3>
-                                    <p class="text-xs text-geo-muted">基于 GDAL WebAssembly，浏览器端完成格式转换、裁剪、重投影等操作</p>
+                                    <h3 class="font-medium text-sm mb-1" data-i18n="about.f2.title">遥感预处理</h3>
+                                    <p class="text-xs text-geo-muted" data-i18n="about.f2.desc">基于 GDAL WebAssembly，浏览器端完成格式转换、裁剪、重投影等操作</p>
                                 </div>
                                 <div class="p-4 rounded-lg bg-geo-bg border border-geo-border">
                                     <i class="fas fa-robot text-geo-purple text-xl mb-2"></i>
-                                    <h3 class="font-medium text-sm mb-1">小米 MiMo 助手</h3>
-                                    <p class="text-xs text-geo-muted">接入小米 <strong class="text-geo-muted font-medium">MiMo-V2.5-Pro</strong>（<code class="text-xs">mimo-v2.5-pro</code>），自然语言查询数据、获取预处理指导（需自备 API Key）</p>
+                                    <h3 class="font-medium text-sm mb-1" data-i18n="about.f3.title">小米 MiMo 助手</h3>
+                                    <p class="text-xs text-geo-muted" data-i18n="about.f3.desc">接入小米 <strong class="text-geo-muted font-medium">MiMo-V2.5-Pro</strong>（<code class="text-xs">mimo-v2.5-pro</code>），自然语言查询数据、获取预处理指导（需自备 API Key）</p>
                                 </div>
                             </div>
                         </div>
@@ -682,7 +685,7 @@
                         <!-- Tech Stack -->
                         <div class="rounded-xl bg-geo-card border border-geo-border p-6">
                             <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
-                                <i class="fas fa-code text-geo-blue"></i>技术栈
+                                <i class="fas fa-code text-geo-blue"></i><span data-i18n="about.tech">技术栈</span>
                             </h2>
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
                                 <div class="flex items-center gap-2 text-geo-muted"><i class="fas fa-check text-geo-green text-xs"></i>GDAL 3.8.4 (WebAssembly)</div>
@@ -690,20 +693,20 @@
                                 <div class="flex items-center gap-2 text-geo-muted"><i class="fas fa-check text-geo-green text-xs"></i>geotiff.js</div>
                                 <div class="flex items-center gap-2 text-geo-muted"><i class="fas fa-check text-geo-green text-xs"></i>proj4js</div>
                                 <div class="flex items-center gap-2 text-geo-muted"><i class="fas fa-check text-geo-green text-xs"></i>Tailwind CSS</div>
-                                <div class="flex items-center gap-2 text-geo-muted"><i class="fas fa-check text-geo-green text-xs"></i>HTTPS 流式对话</div>
+                                <div class="flex items-center gap-2 text-geo-muted"><i class="fas fa-check text-geo-green text-xs"></i><span data-i18n="about.https">HTTPS 流式对话</span></div>
                             </div>
                         </div>
 
                         <!-- Browser Compatibility -->
                         <div class="rounded-xl bg-geo-card border border-geo-border p-6">
                             <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
-                                <i class="fas fa-desktop text-geo-green"></i>浏览器兼容性
+                                <i class="fas fa-desktop text-geo-green"></i><span data-i18n="about.compat">浏览器兼容性</span>
                             </h2>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-sm">
                                     <thead>
                                         <tr class="border-b border-geo-border text-geo-muted">
-                                            <th class="text-left py-2 pr-4">功能</th>
+                                            <th class="text-left py-2 pr-4" data-i18n="about.feat">功能</th>
                                             <th class="text-center py-2 px-2">Chrome</th>
                                             <th class="text-center py-2 px-2">Edge</th>
                                             <th class="text-center py-2 px-2">Firefox</th>
@@ -712,21 +715,21 @@
                                     </thead>
                                     <tbody class="text-geo-muted">
                                         <tr class="border-b border-geo-border/50">
-                                            <td class="py-2 pr-4">数据源导航</td>
+                                            <td class="py-2 pr-4" data-i18n="about.featNav">数据源导航</td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
                                         </tr>
                                         <tr class="border-b border-geo-border/50">
-                                            <td class="py-2 pr-4">GDAL 预处理</td>
+                                            <td class="py-2 pr-4" data-i18n="about.featGDAL">GDAL 预处理</td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
                                         </tr>
                                         <tr>
-                                            <td class="py-2 pr-4">MiMo 助手</td>
+                                            <td class="py-2 pr-4" data-i18n="about.featMiMo">MiMo 助手</td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
                                             <td class="text-center py-2 px-2"><i class="fas fa-check text-geo-green"></i></td>
@@ -740,15 +743,15 @@
                         <!-- Keyboard Shortcuts -->
                         <div class="rounded-xl bg-geo-card border border-geo-border p-6">
                             <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
-                                <i class="fas fa-keyboard text-geo-purple"></i>快捷键
+                                <i class="fas fa-keyboard text-geo-purple"></i><span data-i18n="about.shortcuts">快捷键</span>
                             </h2>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                                 <div class="flex items-center justify-between py-1">
-                                    <span class="text-geo-muted">搜索数据源</span>
+                                    <span class="text-geo-muted" data-i18n="about.shortSearch">搜索数据源</span>
                                     <kbd class="bg-geo-bg px-2 py-0.5 rounded border border-geo-border text-xs font-mono">Ctrl+K</kbd>
                                 </div>
                                 <div class="flex items-center justify-between py-1">
-                                    <span class="text-geo-muted">打开 MiMo 助手</span>
+                                    <span class="text-geo-muted" data-i18n="about.shortAI">打开 MiMo 助手</span>
                                     <kbd class="bg-geo-bg px-2 py-0.5 rounded border border-geo-border text-xs font-mono">Ctrl+/</kbd>
                                 </div>
                             </div>
@@ -756,7 +759,7 @@
                     </div>
 
                     <div class="text-center mt-8 text-xs text-geo-dim">
-                        <p>GeoNavigator &copy; 2025 — GDAL 预处理在浏览器本地完成；助手对话通过小米 MiMo 云端 API（需自备 Key）</p>
+                        <p data-i18n="about.copyright">GeoNavigator &copy; 2025 — GDAL 预处理在浏览器本地完成；助手对话通过小米 MiMo 云端 API（需自备 Key）</p>
                     </div>
                 </div>
             </div>
@@ -777,12 +780,12 @@
                         <i class="fas fa-robot text-geo-purple text-sm"></i>
                     </div>
                     <div>
-                        <div class="text-sm font-medium flex items-center gap-2">AI 助手 <div id="aiStatusDot" class="pulse-dot bg-geo-dim"></div></div>
-                        <div id="aiStatusText" class="text-xs text-geo-dim">选择模型并连接</div>
+                        <div class="text-sm font-medium flex items-center gap-2"><span data-i18n="ai.title">AI 助手</span> <div id="aiStatusDot" class="pulse-dot bg-geo-dim"></div></div>
+                        <div id="aiStatusText" class="text-xs text-geo-dim" data-i18n="ai.status">选择模型并连接</div>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span id="currentModelBadge" class="text-xs text-geo-muted px-2 py-1 rounded-lg bg-geo-bg border border-geo-border whitespace-nowrap">未连接</span>
+                    <span id="currentModelBadge" class="text-xs text-geo-muted px-2 py-1 rounded-lg bg-geo-bg border border-geo-border whitespace-nowrap" data-i18n="ai.disconnected">未连接</span>
                     <button class="text-geo-muted hover:text-geo-text p-1.5 hover:bg-geo-hover rounded-lg transition-colors" onclick="toggleChatDialog()">
                         <i class="fas fa-chevron-down"></i>
                     </button>
@@ -791,7 +794,7 @@
 
             <!-- AI Settings Toggle -->
             <button id="settingsToggle" onclick="toggleSettings()" class="hidden px-3 py-1.5 border-b border-geo-border bg-geo-bg/40 flex items-center justify-between text-xs text-geo-dim hover:text-geo-muted transition-colors flex-shrink-0">
-                <span><i class="fas fa-cog mr-1"></i>模型设置</span>
+                <span><i class="fas fa-cog mr-1"></i><span data-i18n="ai.settings">模型设置</span></span>
                 <i class="fas fa-chevron-down transition-transform" id="settingsChevron"></i>
             </button>
 
@@ -799,7 +802,7 @@
             <div id="settingsPanel" class="px-3 py-2.5 border-b border-geo-border bg-geo-bg/40 space-y-2 flex-shrink-0 max-h-[45%] overflow-y-auto">
                 <!-- Provider Selector -->
                 <div>
-                    <label class="block text-xs text-geo-dim mb-1">模型提供商</label>
+                    <label class="block text-xs text-geo-dim mb-1" data-i18n="ai.provider">模型提供商</label>
                     <select id="llmProvider" class="w-full px-2 py-1.5 bg-geo-bg border border-geo-border rounded-lg text-xs text-geo-text focus:outline-none focus:border-geo-purple" onchange="onProviderChange()">
                         <option value="deepseek">DeepSeek</option>
                         <option value="qwen">通义千问 Qwen</option>
@@ -816,34 +819,34 @@
                 </div>
                 <!-- Model Selector -->
                 <div>
-                    <label class="block text-xs text-geo-dim mb-1">模型</label>
+                    <label class="block text-xs text-geo-dim mb-1" data-i18n="ai.model">模型</label>
                     <select id="llmModelSelect" class="w-full px-2 py-1.5 bg-geo-bg border border-geo-border rounded-lg text-xs text-geo-text focus:outline-none focus:border-geo-purple" onchange="onModelSelectChange()">
                     </select>
                     <input id="llmModelId" type="text" style="display:none"
                         class="w-full mt-1 px-2.5 py-1.5 bg-geo-bg border border-geo-border rounded-lg text-xs text-geo-text placeholder-geo-dim focus:outline-none focus:border-geo-purple font-mono"
-                        placeholder="输入自定义模型 ID" />
+                        data-i18n-placeholder="ai.customModel" placeholder="输入自定义模型 ID" />
                 </div>
                 <!-- API Base -->
                 <div>
-                    <label class="block text-xs text-geo-dim mb-1">API 地址</label>
+                    <label class="block text-xs text-geo-dim mb-1" data-i18n="ai.apiBase">API 地址</label>
                     <input id="llmApiBase" type="text"
                         class="w-full px-2.5 py-1.5 bg-geo-bg border border-geo-border rounded-lg text-xs text-geo-text placeholder-geo-dim focus:outline-none focus:border-geo-purple font-mono"
                         placeholder="https://api.example.com/v1/chat/completions" />
                 </div>
                 <!-- API Key -->
                 <div>
-                    <label class="block text-xs text-geo-dim mb-1">API Key</label>
+                    <label class="block text-xs text-geo-dim mb-1" data-i18n="ai.apiKey">API Key</label>
                     <input id="llmApiKey" type="password" autocomplete="off" spellcheck="false"
-                        placeholder="粘贴 API Key（sk-…）"
+                        data-i18n-placeholder="ai.keyPlaceholder" placeholder="粘贴 API Key（sk-…）"
                         class="w-full px-2.5 py-1.5 bg-geo-bg border border-geo-border rounded-lg text-xs text-geo-text placeholder-geo-dim focus:outline-none focus:border-geo-purple font-mono" />
                 </div>
                 <label class="flex items-center gap-2 text-xs text-geo-dim cursor-pointer select-none">
                     <input type="checkbox" id="llmSaveKey" class="rounded border-geo-border" checked />
-                    保存设置到本机
+                    <span data-i18n="ai.save">保存设置到本机</span>
                 </label>
                 <!-- Connect Button -->
                 <button id="llmConnectBtn" onclick="connectLLM()" class="w-full py-2 rounded-lg bg-geo-purple text-white text-xs font-medium hover:bg-geo-purple/80 transition-colors flex items-center justify-center gap-2">
-                    <i class="fas fa-plug"></i>连接
+                    <i class="fas fa-plug"></i><span data-i18n="ai.connect">连接</span>
                 </button>
             </div>
 
@@ -851,7 +854,7 @@
             <div id="aiProgress" class="hidden px-4 py-2 bg-geo-purple/5 border-b border-geo-border">
                 <div class="flex items-center gap-2 mb-1.5">
                     <div class="pulse-dot bg-geo-purple"></div>
-                    <span id="aiProgressText" class="text-xs text-geo-purple">准备连接...</span>
+                    <span id="aiProgressText" class="text-xs text-geo-purple" data-i18n="ai.connecting">准备连接...</span>
                 </div>
                 <div class="w-full bg-geo-bg rounded-full h-1">
                     <div id="aiProgressBar" class="bg-geo-purple h-1 rounded-full transition-all duration-300" style="width: 0%"></div>
@@ -859,7 +862,7 @@
             </div>
 
             <!-- Hint -->
-            <div id="llmHint" class="px-3 py-2 text-xs text-geo-dim leading-relaxed border-b border-geo-border/50">
+            <div id="llmHint" class="px-3 py-2 text-xs text-geo-dim leading-relaxed border-b border-geo-border/50" data-i18n="ai.hint">
                 所有模型均使用 OpenAI 兼容接口。不要用 <code class="text-geo-muted">file://</code> 打开，请用 <code class="text-geo-muted">npx serve</code> 等本地服务。
             </div>
 
@@ -869,20 +872,20 @@
                     <div class="w-12 h-12 rounded-full bg-geo-purple/10 flex items-center justify-center mx-auto mb-3">
                         <i class="fas fa-robot text-xl text-geo-purple/50"></i>
                     </div>
-                    <p class="text-sm text-geo-muted mb-1">地理空间 AI 助手</p>
-                    <p class="text-xs text-geo-dim">选择模型、填入 API Key，点击连接即可开始对话</p>
+                    <p class="text-sm text-geo-muted mb-1" data-i18n="ai.welcome">地理空间 AI 助手</p>
+                    <p class="text-xs text-geo-dim" data-i18n="ai.welcomeDesc">选择模型、填入 API Key，点击连接即可开始对话</p>
                 </div>
             </div>
 
             <!-- Quick Questions -->
             <div id="quickQuestions" class="px-3 pb-2">
                 <div class="flex flex-wrap gap-1.5">
-                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)">这个网页有什么功能？</button>
-                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)">推荐中国免费数据平台</button>
-                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)">怎么裁剪影像？</button>
-                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)">NDVI 怎么算？</button>
-                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)">风云卫星数据哪下载？</button>
-                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)">推荐免费高程数据</button>
+                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)" data-i18n="ai.q1">这个网页有什么功能？</button>
+                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)" data-i18n="ai.q2">推荐中国免费数据平台</button>
+                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)" data-i18n="ai.q3">怎么裁剪影像？</button>
+                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)" data-i18n="ai.q4">NDVI 怎么算？</button>
+                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)" data-i18n="ai.q5">风云卫星数据哪下载？</button>
+                    <button class="text-xs px-2 py-1 rounded-full bg-geo-bg border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors" onclick="askQuickQuestion(this.textContent, event)" data-i18n="ai.q6">推荐免费高程数据</button>
                 </div>
             </div>
 
@@ -891,17 +894,17 @@
                 <div class="flex items-center gap-2">
                     <button id="agentToggle" onclick="toggleAgentMode()" class="flex items-center gap-1.5 px-2 py-1 rounded-lg text-xs border border-geo-border text-geo-dim hover:border-geo-purple hover:text-geo-purple transition-colors">
                         <i class="fas fa-robot"></i>
-                        <span>Agent 模式</span>
+                        <span data-i18n="ai.agent">Agent 模式</span>
                     </button>
-                    <span id="agentBadge" class="hidden text-xs px-1.5 py-0.5 rounded-full bg-geo-purple/20 text-geo-purple">自主执行</span>
+                    <span id="agentBadge" class="hidden text-xs px-1.5 py-0.5 rounded-full bg-geo-purple/20 text-geo-purple" data-i18n="ai.agentBadge">自主执行</span>
                 </div>
-                <span class="text-xs text-geo-dim">开启后 AI 自动规划并连续执行多个步骤</span>
+                <span class="text-xs text-geo-dim" data-i18n="ai.agentDesc">开启后 AI 自动规划并连续执行多个步骤</span>
             </div>
 
             <!-- Chat Input -->
             <div class="p-3 border-t border-geo-border flex-shrink-0">
                 <div class="flex gap-2 items-end">
-                    <textarea id="chatInput" placeholder="输入你的问题..." disabled rows="1"
+                    <textarea id="chatInput" data-i18n-placeholder="ai.placeholder" placeholder="输入你的问题..." disabled rows="1"
                         class="flex-1 px-3 py-2 bg-geo-bg border border-geo-border rounded-xl text-sm text-geo-text placeholder-geo-dim focus:outline-none focus:border-geo-purple transition-colors disabled:opacity-50 resize-none max-h-24 leading-relaxed"
                         onkeydown="handleChatKeydown(event)" oninput="autoResizeTextarea(this)"></textarea>
                     <button id="chatSendBtn" onclick="sendChatMessage()" disabled
@@ -925,6 +928,387 @@
 
     <!-- Main Application Logic -->
     <script>
+    // ============================================================
+    // 第零部分：国际化 (i18n) — 中英文切换
+    // ============================================================
+    window.currentLang = localStorage.getItem('geonavigator_lang') || 'zh';
+
+    const I18N = {
+    zh: {
+        // 导航
+        'nav.sources': '数据源', 'nav.preprocess': '预处理', 'nav.about': '关于',
+        'nav.search': '搜索数据源...', 'nav.ai': 'AI 助手',
+        // 侧边栏
+        'sidebar.title': '筛选与分类', 'sidebar.search': '搜索平台名称、数据类型...',
+        'sidebar.dataType': '数据类型', 'sidebar.region': '区域', 'sidebar.access': '访问方式',
+        'sidebar.clear': '清除所有筛选', 'sidebar.found': '个数据源',
+        // 数据源模块
+        'sources.title': '地理空间数据源',
+        'sources.desc': '聚合全球 <span class="text-geo-blue font-medium">50+</span> 个主流地理空间数据平台，中国平台优先展示，一键导航到你需要的数据',
+        'sources.total': '数据源', 'sources.china': '中国平台', 'sources.global': '国际平台',
+        'sources.empty': '未找到匹配的数据源', 'sources.emptyHint': '尝试调整搜索关键词或筛选条件',
+        'sources.free': '免费', 'sources.reg': '需注册', 'sources.api': 'API',
+        // 预处理模块
+        'preprocess.title': '遥感数据预处理',
+        'preprocess.desc': '基于 GDAL WebAssembly 的浏览器端遥感影像处理工具',
+        'preprocess.gdalLoading': 'GDAL 引擎未加载 — 切换到此页面时将自动初始化',
+        'preprocess.upload': '拖拽文件到此处或点击上传',
+        'preprocess.uploadHint': '支持 GeoTIFF, ENVI, HDF, JPEG2000 等格式',
+        'preprocess.fileInfo': '文件信息', 'preprocess.removeFile': '移除文件',
+        'preprocess.history': '处理记录', 'preprocess.noHistory': '暂无处理记录',
+        'preprocess.toolPlaceholder': '请先上传文件，然后选择处理工具',
+        // 工具标签
+        'tool.format': '格式转换', 'tool.clip': '裁剪', 'tool.reproject': '重投影',
+        'tool.bands': '波段提取', 'tool.resample': '重采样', 'tool.calibrate': '辐射定标',
+        'tool.histogram': '直方图均衡化', 'tool.stretch': '对比度拉伸', 'tool.sharpen': '锐化',
+        'tool.lowpass': '低通滤波', 'tool.highpass': '高通滤波',
+        // 文件信息标签
+        'file.name': '文件名', 'file.size': '文件大小', 'file.format': '格式',
+        'file.dim': '尺寸', 'file.bands': '波段数', 'file.dtype': '数据类型',
+        'file.crs': '坐标系', 'file.res': '分辨率',
+        // 格式转换
+        'fmt.title': '格式转换', 'fmt.desc': '将当前文件转换为目标格式',
+        'fmt.output': '输出格式', 'fmt.execute': '执行转换',
+        // 裁剪
+        'clip.title': '按范围裁剪', 'clip.desc': '输入裁剪范围的坐标（左上角 X, Y 和右下角 X, Y）',
+        'clip.ulx': '左上 X (ULX)', 'clip.uly': '左上 Y (ULY)',
+        'clip.lrx': '右下 X (LRX)', 'clip.lry': '右下 Y (LRY)',
+        'clip.execute': '执行裁剪',
+        // 重投影
+        'reproj.title': '重投影', 'reproj.desc': '将影像转换到目标坐标参考系',
+        'reproj.current': '当前坐标系', 'reproj.target': '目标 EPSG 代码',
+        'reproj.method': '重采样方法', 'reproj.execute': '执行重投影',
+        'reproj.nearest': '最近邻', 'reproj.bilinear': '双线性', 'reproj.cubic': '三次卷积',
+        'reproj.cubicspline': '三次样条', 'reproj.lanczos': 'Lanczos', 'reproj.average': '平均', 'reproj.mode': '众数',
+        // 波段提取
+        'bands.title': '波段提取', 'bands.desc': '选择要提取的波段（按住 Ctrl/Cmd 多选）',
+        'bands.select': '选择波段', 'bands.execute': '执行提取',
+        // 重采样
+        'resamp.title': '重采样', 'resamp.desc': '调整影像分辨率',
+        'resamp.current': '当前分辨率', 'resamp.x': 'X 分辨率', 'resamp.y': 'Y 分辨率',
+        'resamp.method': '重采样方法', 'resamp.execute': '执行重采样',
+        // 辐射定标
+        'cal.title': '辐射定标', 'cal.desc': '将 DN 值转换为辐射亮度或表观反射率',
+        'cal.type': '定标类型', 'cal.toa': '表观反射率 (TOA)', 'cal.radiance': '辐射亮度',
+        'cal.output': '输出数据类型', 'cal.execute': '执行辐射定标',
+        'cal.info': '使用 gdal_translate 的 -scale 参数进行线性变换。如需精确的辐射定标，请参考各卫星的定标参数手册。',
+        // NDVI
+        'ndvi.title': 'NDVI 计算', 'ndvi.desc': '归一化植被指数: NDVI = (NIR - Red) / (NIR + Red)',
+        'ndvi.info': '当前文件共 {n} 个波段，请选择红光波段和近红外波段',
+        'ndvi.ref': '常见卫星波段对照：Sentinel-2: B4(红), B8(近红外) | Landsat-8: B4(红), B5(近红外)',
+        'ndvi.red': '红光波段 (Red)', 'ndvi.nir': '近红外波段 (NIR)',
+        'ndvi.preview': 'NDVI 预览', 'ndvi.low': '-1 (无植被)', 'ndvi.high': '+1 (密集植被)',
+        'ndvi.execute': '计算 NDVI',
+        // EVI
+        'evi.title': 'EVI 计算', 'evi.desc': '增强植被指数: EVI = 2.5 × (NIR - Red) / (NIR + 6×Red - 7.5×Blue + 1)',
+        'evi.info': '当前文件共 {n} 个波段，请选择蓝光、红光和近红外波段',
+        'evi.ref': '常见卫星波段对照：Sentinel-2: B2(蓝), B4(红), B8(近红外) | Landsat-8: B2(蓝), B4(红), B5(近红外)',
+        'evi.blue': '蓝光波段 (Blue)', 'evi.red': '红光波段 (Red)', 'evi.nir': '近红外波段 (NIR)',
+        'evi.preview': 'EVI 预览', 'evi.low': '0 (无植被)', 'evi.high': '+1 (密集植被)',
+        'evi.execute': '计算 EVI',
+        // NDWI
+        'ndwi.title': 'NDWI 计算', 'ndwi.desc': '归一化水体指数: NDWI = (Green - NIR) / (Green + NIR)',
+        'ndwi.info': '当前文件共 {n} 个波段，请选择绿光波段和近红外波段',
+        'ndwi.ref': '常见卫星波段对照：Sentinel-2: B3(绿), B8(近红外) | Landsat-8: B3(绿), B5(近红外)',
+        'ndwi.green': '绿光波段 (Green)', 'ndwi.nir': '近红外波段 (NIR)',
+        'ndwi.preview': 'NDWI 预览', 'ndwi.low': '-1 (无水体)', 'ndwi.high': '+1 (水体)',
+        'ndwi.execute': '计算 NDWI',
+        // SAVI
+        'savi.title': 'SAVI 计算', 'savi.desc': '土壤调节植被指数: SAVI = (NIR - Red) / (NIR + Red + L) × (1 + L)',
+        'savi.info': '当前文件共 {n} 个波段，请选择红光波段和近红外波段',
+        'savi.ref': 'SAVI 适用于植被覆盖度较低的区域，L 值通常取 0.5',
+        'savi.red': '红光波段 (Red)', 'savi.nir': '近红外波段 (NIR)',
+        'savi.L': '土壤亮度校正因子 (L)', 'savi.preview': 'SAVI 预览',
+        'savi.low': '-1 (无植被)', 'savi.high': '+1 (密集植被)',
+        'savi.execute': '计算 SAVI',
+        // 直方图均衡化
+        'hist.title': '直方图均衡化', 'hist.desc': '增强图像对比度，使像素值分布更加均匀',
+        'hist.info': '直方图均衡化可以增强图像的对比度，特别适用于对比度较低的遥感影像。处理后像素值分布将更加均匀。',
+        'hist.band': '应用波段', 'hist.all': '所有波段', 'hist.rgb': 'RGB 合成',
+        'hist.execute': '执行直方图均衡化',
+        // 对比度拉伸
+        'stretch.title': '对比度拉伸', 'stretch.desc': '线性拉伸像素值范围，去除异常值影响',
+        'stretch.info': '对比度拉伸将像素值线性映射到 0-255 范围，可以选择去除两端的异常值百分比。',
+        'stretch.low': '下限百分比 (%)', 'stretch.high': '上限百分比 (%)',
+        'stretch.execute': '执行对比度拉伸',
+        // 锐化
+        'sharpen.title': '锐化', 'sharpen.desc': '增强图像边缘和细节，提高清晰度',
+        'sharpen.info': '锐化处理可以增强图像的边缘和细节，使图像更加清晰。选择合适的锐化强度可以避免过度增强噪声。',
+        'sharpen.method': '锐化方法', 'sharpen.laplacian': '拉普拉斯锐化',
+        'sharpen.unsharp': '反锐化掩模', 'sharpen.sobel': 'Sobel 边缘增强',
+        'sharpen.strength': '锐化强度', 'sharpen.weak': '弱', 'sharpen.mid': '中', 'sharpen.strong': '强',
+        'sharpen.execute': '执行锐化',
+        // 低通滤波
+        'lowpass.title': '低通滤波', 'lowpass.desc': '平滑图像，去除噪声和细节',
+        'lowpass.info': '低通滤波可以平滑图像，去除高频噪声，但也会使图像变得模糊。适用于去噪和图像预处理。',
+        'lowpass.method': '滤波方法', 'lowpass.mean': '均值滤波', 'lowpass.gaussian': '高斯滤波', 'lowpass.median': '中值滤波',
+        'lowpass.kernel': '滤波核大小', 'lowpass.execute': '执行低通滤波',
+        // 高通滤波
+        'highpass.title': '高通滤波', 'highpass.desc': '增强边缘和细节，提取高频信息',
+        'highpass.info': '高通滤波可以增强图像的边缘和细节，提取高频信息。适用于边缘检测和图像增强。',
+        'highpass.method': '滤波方法', 'highpass.laplacian': '拉普拉斯滤波', 'highpass.sobel': 'Sobel 滤波',
+        'highpass.prewitt': 'Prewitt 滤波', 'highpass.canny': 'Canny 边缘检测',
+        'highpass.kernel': '滤波核大小', 'highpass.execute': '执行高通滤波',
+        // 关于页面
+        'about.subtitle': '地理空间数据导航与预处理平台', 'about.version': '版本 1.0.0',
+        'about.features': '核心功能', 'about.f1.title': '数据源导航',
+        'about.f1.desc': '聚合 50+ 全球地理空间数据平台，中国平台优先展示，支持搜索与分类筛选',
+        'about.f2.title': '遥感预处理', 'about.f2.desc': '基于 GDAL WebAssembly，浏览器端完成格式转换、裁剪、重投影等操作',
+        'about.f3.title': '小米 MiMo 助手', 'about.f3.desc': '接入小米 <strong class="text-geo-muted font-medium">MiMo-V2.5-Pro</strong>（<code class="text-xs">mimo-v2.5-pro</code>），自然语言查询数据、获取预处理指导（需自备 API Key）',
+        'about.tech': '技术栈', 'about.https': 'HTTPS 流式对话',
+        'about.compat': '浏览器兼容性', 'about.feat': '功能',
+        'about.featNav': '数据源导航', 'about.featGDAL': 'GDAL 预处理', 'about.featMiMo': 'MiMo 助手',
+        'about.shortcuts': '快捷键', 'about.shortSearch': '搜索数据源', 'about.shortAI': '打开 MiMo 助手',
+        'about.copyright': 'GeoNavigator &copy; 2025 — GDAL 预处理在浏览器本地完成；助手对话通过小米 MiMo 云端 API（需自备 Key）',
+        // AI 助手
+        'ai.title': 'AI 助手', 'ai.status': '选择模型并连接', 'ai.disconnected': '未连接',
+        'ai.settings': '模型设置', 'ai.provider': '模型提供商', 'ai.model': '模型',
+        'ai.customModel': '输入自定义模型 ID', 'ai.apiBase': 'API 地址', 'ai.apiKey': 'API Key',
+        'ai.keyPlaceholder': '粘贴 API Key（sk-…）', 'ai.save': '保存设置到本机', 'ai.connect': '连接',
+        'ai.connecting': '准备连接...', 'ai.hint': '所有模型均使用 OpenAI 兼容接口。不要用 <code class="text-geo-muted">file://</code> 打开，请用 <code class="text-geo-muted">npx serve</code> 等本地服务。',
+        'ai.welcome': '地理空间 AI 助手', 'ai.welcomeDesc': '选择模型、填入 API Key，点击连接即可开始对话',
+        'ai.q1': '这个网页有什么功能？', 'ai.q2': '推荐中国免费数据平台',
+        'ai.q3': '怎么裁剪影像？', 'ai.q4': 'NDVI 怎么算？',
+        'ai.q5': '风云卫星数据哪下载？', 'ai.q6': '推荐免费高程数据',
+        'ai.agent': 'Agent 模式', 'ai.agentBadge': '自主执行', 'ai.agentDesc': '开启后 AI 自动规划并连续执行多个步骤',
+        'ai.placeholder': '输入你的问题...',
+        // 加载器
+        'loader.text': 'GeoNavigator 加载中...', 'loader.processing': '正在处理，请稍候...',
+        // Toast 消息
+        'toast.gdalReady': 'GDAL WebAssembly 加载成功', 'toast.gdalFail': 'GDAL 加载失败',
+        'toast.fileRemoved': '文件已移除', 'toast.waitGdal': '请等待 GDAL 加载完成',
+        'toast.uploadFirst': '请先上传文件', 'toast.formatDone': '格式转换完成',
+        'toast.clipDone': '裁剪完成', 'toast.reprojDone': '重投影完成',
+        'toast.bandDone': '波段提取完成', 'toast.resampDone': '重采样完成',
+        'toast.calDone': '辐射定标完成', 'toast.ndviDone': 'NDVI 计算完成',
+        'toast.eviDone': 'EVI 计算完成', 'toast.ndwiDone': 'NDWI 计算完成',
+        'toast.saviDone': 'SAVI 计算完成', 'toast.histDone': '直方图均衡化完成',
+        'toast.stretchDone': '对比度拉伸完成', 'toast.sharpenDone': '锐化完成',
+        'toast.lowpassDone': '低通滤波完成', 'toast.highpassDone': '高通滤波完成',
+        'toast.gdalNotReady': 'GDAL 未加载',
+        // CATEGORIES
+        'cat.optical': '光学影像', 'cat.sar': 'SAR 雷达', 'cat.dem': 'DEM 高程',
+        'cat.vector': '矢量数据', 'cat.climate': '气候数据', 'cat.atmosphere': '大气数据',
+        'cat.socioeconomic': '社会经济', 'cat.lidar': 'LiDAR 点云', 'cat.ml': '机器学习',
+        'cat.global': '全球', 'cat.china': '中国', 'cat.asia': '亚洲',
+        'cat.europe': '欧洲', 'cat.americas': '美洲',
+        'cat.free': '免费开放', 'cat.registration': '需注册', 'cat.api': 'API 访问',
+    },
+    en: {
+        // Navigation
+        'nav.sources': 'Sources', 'nav.preprocess': 'Preprocess', 'nav.about': 'About',
+        'nav.search': 'Search data sources...', 'nav.ai': 'AI Assistant',
+        // Sidebar
+        'sidebar.title': 'Filters', 'sidebar.search': 'Search platforms, data types...',
+        'sidebar.dataType': 'Data Type', 'sidebar.region': 'Region', 'sidebar.access': 'Access',
+        'sidebar.clear': 'Clear All Filters', 'sidebar.found': 'sources found',
+        // Sources module
+        'sources.title': 'Geospatial Data Sources',
+        'sources.desc': 'Aggregating <span class="text-geo-blue font-medium">50+</span> global geospatial data platforms, Chinese platforms prioritized, one-click navigation to your data',
+        'sources.total': 'Sources', 'sources.china': 'Chinese', 'sources.global': 'International',
+        'sources.empty': 'No matching sources found', 'sources.emptyHint': 'Try adjusting search keywords or filters',
+        'sources.free': 'Free', 'sources.reg': 'Registration', 'sources.api': 'API',
+        // Preprocess module
+        'preprocess.title': 'Remote Sensing Preprocessing',
+        'preprocess.desc': 'Browser-based remote sensing image processing powered by GDAL WebAssembly',
+        'preprocess.gdalLoading': 'GDAL engine not loaded — will auto-initialize when switching to this page',
+        'preprocess.upload': 'Drag & drop files here or click to upload',
+        'preprocess.uploadHint': 'Supports GeoTIFF, ENVI, HDF, JPEG2000 and more',
+        'preprocess.fileInfo': 'File Info', 'preprocess.removeFile': 'Remove File',
+        'preprocess.history': 'Processing History', 'preprocess.noHistory': 'No history yet',
+        'preprocess.toolPlaceholder': 'Upload a file first, then select a tool',
+        // Tool tabs
+        'tool.format': 'Format', 'tool.clip': 'Clip', 'tool.reproject': 'Reproject',
+        'tool.bands': 'Bands', 'tool.resample': 'Resample', 'tool.calibrate': 'Calibrate',
+        'tool.histogram': 'Histogram Eq.', 'tool.stretch': 'Stretch', 'tool.sharpen': 'Sharpen',
+        'tool.lowpass': 'Low-pass', 'tool.highpass': 'High-pass',
+        // File info
+        'file.name': 'Filename', 'file.size': 'File Size', 'file.format': 'Format',
+        'file.dim': 'Dimensions', 'file.bands': 'Bands', 'file.dtype': 'Data Type',
+        'file.crs': 'CRS', 'file.res': 'Resolution',
+        // Format convert
+        'fmt.title': 'Format Conversion', 'fmt.desc': 'Convert current file to target format',
+        'fmt.output': 'Output Format', 'fmt.execute': 'Execute Conversion',
+        // Clip
+        'clip.title': 'Spatial Clip', 'clip.desc': 'Enter clip coordinates (ULX, ULY, LRX, LRY)',
+        'clip.ulx': 'ULX', 'clip.uly': 'ULY', 'clip.lrx': 'LRX', 'clip.lry': 'LRY',
+        'clip.execute': 'Execute Clip',
+        // Reproject
+        'reproj.title': 'Reprojection', 'reproj.desc': 'Reproject image to target CRS',
+        'reproj.current': 'Current CRS', 'reproj.target': 'Target EPSG Code',
+        'reproj.method': 'Resample Method', 'reproj.execute': 'Execute Reprojection',
+        'reproj.nearest': 'Nearest', 'reproj.bilinear': 'Bilinear', 'reproj.cubic': 'Cubic',
+        'reproj.cubicspline': 'Cubic Spline', 'reproj.lanczos': 'Lanczos', 'reproj.average': 'Average', 'reproj.mode': 'Mode',
+        // Bands
+        'bands.title': 'Band Extraction', 'bands.desc': 'Select bands to extract (Ctrl/Cmd for multi-select)',
+        'bands.select': 'Select Bands', 'bands.execute': 'Execute Extraction',
+        // Resample
+        'resamp.title': 'Resampling', 'resamp.desc': 'Adjust image resolution',
+        'resamp.current': 'Current Resolution', 'resamp.x': 'X Resolution', 'resamp.y': 'Y Resolution',
+        'resamp.method': 'Resample Method', 'resamp.execute': 'Execute Resampling',
+        // Calibrate
+        'cal.title': 'Radiometric Calibration', 'cal.desc': 'Convert DN values to radiance or TOA reflectance',
+        'cal.type': 'Calibration Type', 'cal.toa': 'TOA Reflectance', 'cal.radiance': 'Radiance',
+        'cal.output': 'Output Data Type', 'cal.execute': 'Execute Calibration',
+        'cal.info': 'Uses gdal_translate -scale for linear transform. For precise calibration, refer to satellite-specific calibration handbooks.',
+        // NDVI
+        'ndvi.title': 'NDVI Calculation', 'ndvi.desc': 'Normalized Difference Vegetation Index: NDVI = (NIR - Red) / (NIR + Red)',
+        'ndvi.info': 'File has {n} bands. Select Red and NIR bands',
+        'ndvi.ref': 'Common bands: Sentinel-2: B4(Red), B8(NIR) | Landsat-8: B4(Red), B5(NIR)',
+        'ndvi.red': 'Red Band', 'ndvi.nir': 'NIR Band',
+        'ndvi.preview': 'NDVI Preview', 'ndvi.low': '-1 (No vegetation)', 'ndvi.high': '+1 (Dense vegetation)',
+        'ndvi.execute': 'Calculate NDVI',
+        // EVI
+        'evi.title': 'EVI Calculation', 'evi.desc': 'Enhanced Vegetation Index: EVI = 2.5 × (NIR - Red) / (NIR + 6×Red - 7.5×Blue + 1)',
+        'evi.info': 'File has {n} bands. Select Blue, Red and NIR bands',
+        'evi.ref': 'Common bands: Sentinel-2: B2(Blue), B4(Red), B8(NIR) | Landsat-8: B2(Blue), B4(Red), B5(NIR)',
+        'evi.blue': 'Blue Band', 'evi.red': 'Red Band', 'evi.nir': 'NIR Band',
+        'evi.preview': 'EVI Preview', 'evi.low': '0 (No vegetation)', 'evi.high': '+1 (Dense vegetation)',
+        'evi.execute': 'Calculate EVI',
+        // NDWI
+        'ndwi.title': 'NDWI Calculation', 'ndwi.desc': 'Normalized Difference Water Index: NDWI = (Green - NIR) / (Green + NIR)',
+        'ndwi.info': 'File has {n} bands. Select Green and NIR bands',
+        'ndwi.ref': 'Common bands: Sentinel-2: B3(Green), B8(NIR) | Landsat-8: B3(Green), B5(NIR)',
+        'ndwi.green': 'Green Band', 'ndwi.nir': 'NIR Band',
+        'ndwi.preview': 'NDWI Preview', 'ndwi.low': '-1 (No water)', 'ndwi.high': '+1 (Water)',
+        'ndwi.execute': 'Calculate NDWI',
+        // SAVI
+        'savi.title': 'SAVI Calculation', 'savi.desc': 'Soil Adjusted Vegetation Index: SAVI = (NIR - Red) / (NIR + Red + L) × (1 + L)',
+        'savi.info': 'File has {n} bands. Select Red and NIR bands',
+        'savi.ref': 'SAVI is suitable for areas with low vegetation cover, L is typically 0.5',
+        'savi.red': 'Red Band', 'savi.nir': 'NIR Band',
+        'savi.L': 'Soil Brightness Correction (L)', 'savi.preview': 'SAVI Preview',
+        'savi.low': '-1 (No vegetation)', 'savi.high': '+1 (Dense vegetation)',
+        'savi.execute': 'Calculate SAVI',
+        // Histogram equalization
+        'hist.title': 'Histogram Equalization', 'hist.desc': 'Enhance image contrast for more uniform pixel distribution',
+        'hist.info': 'Histogram equalization enhances image contrast, especially useful for low-contrast remote sensing images. Pixel values will be more evenly distributed.',
+        'hist.band': 'Apply to', 'hist.all': 'All Bands', 'hist.rgb': 'RGB Composite',
+        'hist.execute': 'Execute Histogram Equalization',
+        // Contrast stretch
+        'stretch.title': 'Contrast Stretch', 'stretch.desc': 'Linearly stretch pixel values, remove outliers',
+        'stretch.info': 'Linearly maps pixel values to 0-255 range, with optional outlier percentage clipping at both ends.',
+        'stretch.low': 'Lower Percentile (%)', 'stretch.high': 'Upper Percentile (%)',
+        'stretch.execute': 'Execute Contrast Stretch',
+        // Sharpen
+        'sharpen.title': 'Sharpening', 'sharpen.desc': 'Enhance edges and details for better clarity',
+        'sharpen.info': 'Sharpening enhances image edges and details for better clarity. Choose appropriate strength to avoid amplifying noise.',
+        'sharpen.method': 'Method', 'sharpen.laplacian': 'Laplacian Sharpening',
+        'sharpen.unsharp': 'Unsharp Mask', 'sharpen.sobel': 'Sobel Edge Enhancement',
+        'sharpen.strength': 'Strength', 'sharpen.weak': 'Weak', 'sharpen.mid': 'Medium', 'sharpen.strong': 'Strong',
+        'sharpen.execute': 'Execute Sharpening',
+        // Low-pass filter
+        'lowpass.title': 'Low-pass Filter', 'lowpass.desc': 'Smooth image, remove noise and details',
+        'lowpass.info': 'Low-pass filtering smooths the image and removes high-frequency noise, but may blur details. Useful for denoising and preprocessing.',
+        'lowpass.method': 'Method', 'lowpass.mean': 'Mean', 'lowpass.gaussian': 'Gaussian', 'lowpass.median': 'Median',
+        'lowpass.kernel': 'Kernel Size', 'lowpass.execute': 'Execute Low-pass Filter',
+        // High-pass filter
+        'highpass.title': 'High-pass Filter', 'highpass.desc': 'Enhance edges and extract high-frequency information',
+        'highpass.info': 'High-pass filtering enhances edges and details, extracting high-frequency information. Useful for edge detection and image enhancement.',
+        'highpass.method': 'Method', 'highpass.laplacian': 'Laplacian', 'highpass.sobel': 'Sobel',
+        'highpass.prewitt': 'Prewitt', 'highpass.canny': 'Canny Edge Detection',
+        'highpass.kernel': 'Kernel Size', 'highpass.execute': 'Execute High-pass Filter',
+        // About
+        'about.subtitle': 'Geospatial Data Navigation & Preprocessing Platform', 'about.version': 'Version 1.0.0',
+        'about.features': 'Core Features', 'about.f1.title': 'Data Source Navigation',
+        'about.f1.desc': 'Aggregates 50+ global geospatial data platforms, Chinese platforms prioritized, with search and category filtering',
+        'about.f2.title': 'Remote Sensing Preprocessing', 'about.f2.desc': 'Based on GDAL WebAssembly, browser-based format conversion, clipping, reprojection and more',
+        'about.f3.title': 'Xiaomi MiMo Assistant', 'about.f3.desc': 'Integrated with Xiaomi <strong class="text-geo-muted font-medium">MiMo-V2.5-Pro</strong> (<code class="text-xs">mimo-v2.5-pro</code>), natural language data queries and preprocessing guidance (API Key required)',
+        'about.tech': 'Tech Stack', 'about.https': 'HTTPS Streaming',
+        'about.compat': 'Browser Compatibility', 'about.feat': 'Feature',
+        'about.featNav': 'Data Source Nav', 'about.featGDAL': 'GDAL Preprocess', 'about.featMiMo': 'MiMo Assistant',
+        'about.shortcuts': 'Shortcuts', 'about.shortSearch': 'Search Sources', 'about.shortAI': 'Open MiMo Assistant',
+        'about.copyright': 'GeoNavigator &copy; 2025 — GDAL preprocessing runs locally in browser; chat via Xiaomi MiMo cloud API (API Key required)',
+        // AI Assistant
+        'ai.title': 'AI Assistant', 'ai.status': 'Select model & connect', 'ai.disconnected': 'Disconnected',
+        'ai.settings': 'Model Settings', 'ai.provider': 'Provider', 'ai.model': 'Model',
+        'ai.customModel': 'Enter custom model ID', 'ai.apiBase': 'API Endpoint', 'ai.apiKey': 'API Key',
+        'ai.keyPlaceholder': 'Paste API Key (sk-...)', 'ai.save': 'Save settings locally', 'ai.connect': 'Connect',
+        'ai.connecting': 'Connecting...', 'ai.hint': 'All models use OpenAI-compatible API. Do not open via <code class="text-geo-muted">file://</code>; use a local server like <code class="text-geo-muted">npx serve</code>.',
+        'ai.welcome': 'Geospatial AI Assistant', 'ai.welcomeDesc': 'Select a model, enter your API Key, and click Connect to start chatting',
+        'ai.q1': 'What can this webpage do?', 'ai.q2': 'Recommend free Chinese data platforms',
+        'ai.q3': 'How to clip imagery?', 'ai.q4': 'How to calculate NDVI?',
+        'ai.q5': 'Where to download FengYun satellite data?', 'ai.q6': 'Recommend free DEM data',
+        'ai.agent': 'Agent Mode', 'ai.agentBadge': 'Autonomous', 'ai.agentDesc': 'AI plans and executes multiple steps automatically',
+        'ai.placeholder': 'Type your question...',
+        // Loader
+        'loader.text': 'GeoNavigator loading...', 'loader.processing': 'Processing, please wait...',
+        // Toast messages
+        'toast.gdalReady': 'GDAL WebAssembly loaded successfully', 'toast.gdalFail': 'GDAL failed to load',
+        'toast.fileRemoved': 'File removed', 'toast.waitGdal': 'Please wait for GDAL to finish loading',
+        'toast.uploadFirst': 'Please upload a file first', 'toast.formatDone': 'Format conversion complete',
+        'toast.clipDone': 'Clipping complete', 'toast.reprojDone': 'Reprojection complete',
+        'toast.bandDone': 'Band extraction complete', 'toast.resampDone': 'Resampling complete',
+        'toast.calDone': 'Calibration complete', 'toast.ndviDone': 'NDVI calculation complete',
+        'toast.eviDone': 'EVI calculation complete', 'toast.ndwiDone': 'NDWI calculation complete',
+        'toast.saviDone': 'SAVI calculation complete', 'toast.histDone': 'Histogram equalization complete',
+        'toast.stretchDone': 'Contrast stretch complete', 'toast.sharpenDone': 'Sharpening complete',
+        'toast.lowpassDone': 'Low-pass filter complete', 'toast.highpassDone': 'High-pass filter complete',
+        'toast.gdalNotReady': 'GDAL not loaded',
+        // CATEGORIES
+        'cat.optical': 'Optical', 'cat.sar': 'SAR', 'cat.dem': 'DEM',
+        'cat.vector': 'Vector', 'cat.climate': 'Climate', 'cat.atmosphere': 'Atmosphere',
+        'cat.socioeconomic': 'Socioeconomic', 'cat.lidar': 'LiDAR', 'cat.ml': 'ML Data',
+        'cat.global': 'Global', 'cat.china': 'China', 'cat.asia': 'Asia',
+        'cat.europe': 'Europe', 'cat.americas': 'Americas',
+        'cat.free': 'Free', 'cat.registration': 'Registration', 'cat.api': 'API',
+    }
+    };
+
+    function t(key, replacements) {
+        let str = I18N[window.currentLang]?.[key] || I18N['zh']?.[key] || key;
+        if (replacements) {
+            for (const [k, v] of Object.entries(replacements)) {
+                str = str.replace(`{${k}}`, v);
+            }
+        }
+        return str;
+    }
+
+    function toggleLanguage() {
+        window.currentLang = window.currentLang === 'zh' ? 'en' : 'zh';
+        localStorage.setItem('geonavigator_lang', window.currentLang);
+        applyTranslations();
+    }
+
+    function applyTranslations() {
+        // Static HTML elements
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const val = t(key);
+            // Support HTML content for keys that contain HTML
+            if (val.includes('<') && val.includes('>')) {
+                el.innerHTML = val;
+            } else {
+                el.textContent = val;
+            }
+        });
+        // Placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+        });
+        // HTML lang
+        document.documentElement.lang = window.currentLang === 'zh' ? 'zh-CN' : 'en';
+        // Toggle button label
+        const langLabel = document.getElementById('langLabel');
+        if (langLabel) langLabel.textContent = window.currentLang === 'zh' ? 'EN' : '中';
+        // Title
+        document.title = window.currentLang === 'zh'
+            ? 'GeoNavigator - 地理空间数据导航与预处理平台'
+            : 'GeoNavigator - Geospatial Data Navigation & Preprocessing Platform';
+        // Re-render dynamic content
+        initFilters();
+        renderSources();
+        // Re-render current tool if any
+        if (window.appState.currentTool && window.appState.currentDataset) {
+            selectTool(window.appState.currentTool);
+        }
+        // Re-render file info if visible
+        if (window.appState.currentFile && window.appState.currentDataset) {
+            displayFileInfo(window.appState.currentDataset.info, window.appState.currentFile);
+        }
+    }
+
     // ============================================================
     // 第一部分：全局状态
     // ============================================================
@@ -1719,27 +2103,27 @@
 
     const CATEGORIES = {
         dataType: [
-            { id: 'optical', label: '光学影像', icon: 'fa-eye' },
-            { id: 'sar', label: 'SAR 雷达', icon: 'fa-tower-broadcast' },
-            { id: 'dem', label: 'DEM 高程', icon: 'fa-mountain' },
-            { id: 'vector', label: '矢量数据', icon: 'fa-draw-polygon' },
-            { id: 'climate', label: '气候数据', icon: 'fa-cloud-sun' },
-            { id: 'atmosphere', label: '大气数据', icon: 'fa-wind' },
-            { id: 'socioeconomic', label: '社会经济', icon: 'fa-users' },
-            { id: 'lidar', label: 'LiDAR 点云', icon: 'fa-cube' },
-            { id: 'ml', label: '机器学习', icon: 'fa-brain' }
+            { id: 'optical', label: '光学影像', icon: 'fa-eye', i18n: 'cat.optical' },
+            { id: 'sar', label: 'SAR 雷达', icon: 'fa-tower-broadcast', i18n: 'cat.sar' },
+            { id: 'dem', label: 'DEM 高程', icon: 'fa-mountain', i18n: 'cat.dem' },
+            { id: 'vector', label: '矢量数据', icon: 'fa-draw-polygon', i18n: 'cat.vector' },
+            { id: 'climate', label: '气候数据', icon: 'fa-cloud-sun', i18n: 'cat.climate' },
+            { id: 'atmosphere', label: '大气数据', icon: 'fa-wind', i18n: 'cat.atmosphere' },
+            { id: 'socioeconomic', label: '社会经济', icon: 'fa-users', i18n: 'cat.socioeconomic' },
+            { id: 'lidar', label: 'LiDAR 点云', icon: 'fa-cube', i18n: 'cat.lidar' },
+            { id: 'ml', label: '机器学习', icon: 'fa-brain', i18n: 'cat.ml' }
         ],
         region: [
-            { id: 'global', label: '全球' },
-            { id: 'china', label: '中国' },
-            { id: 'asia', label: '亚洲' },
-            { id: 'europe', label: '欧洲' },
-            { id: 'americas', label: '美洲' }
+            { id: 'global', label: '全球', i18n: 'cat.global' },
+            { id: 'china', label: '中国', i18n: 'cat.china' },
+            { id: 'asia', label: '亚洲', i18n: 'cat.asia' },
+            { id: 'europe', label: '欧洲', i18n: 'cat.europe' },
+            { id: 'americas', label: '美洲', i18n: 'cat.americas' }
         ],
         access: [
-            { id: 'free', label: '免费开放' },
-            { id: 'registration', label: '需注册' },
-            { id: 'api', label: 'API 访问' }
+            { id: 'free', label: '免费开放', i18n: 'cat.free' },
+            { id: 'registration', label: '需注册', i18n: 'cat.registration' },
+            { id: 'api', label: 'API 访问', i18n: 'cat.api' }
         ]
     };
 
@@ -1832,7 +2216,7 @@
         const dtContainer = document.getElementById('dataTypeFilters');
         dtContainer.innerHTML = CATEGORIES.dataType.map(cat =>
             `<button class="filter-tag px-2.5 py-1 rounded-full text-xs border border-geo-border text-geo-muted bg-geo-bg" data-category="dataType" data-value="${cat.id}" onclick="toggleFilter('dataType', '${cat.id}', this)">
-                <i class="fas ${cat.icon} mr-1"></i>${cat.label}
+                <i class="fas ${cat.icon} mr-1"></i>${t(cat.i18n)}
             </button>`
         ).join('');
 
@@ -1840,7 +2224,7 @@
         const rgContainer = document.getElementById('regionFilters');
         rgContainer.innerHTML = CATEGORIES.region.map(cat =>
             `<button class="filter-tag px-2.5 py-1 rounded-full text-xs border border-geo-border text-geo-muted bg-geo-bg" data-category="region" data-value="${cat.id}" onclick="toggleFilter('region', '${cat.id}', this)">
-                ${cat.label}
+                ${t(cat.i18n)}
             </button>`
         ).join('');
 
@@ -1848,7 +2232,7 @@
         const acContainer = document.getElementById('accessFilters');
         acContainer.innerHTML = CATEGORIES.access.map(cat =>
             `<button class="filter-tag px-2.5 py-1 rounded-full text-xs border border-geo-border text-geo-muted bg-geo-bg" data-category="access" data-value="${cat.id}" onclick="toggleFilter('access', '${cat.id}', this)">
-                ${cat.label}
+                ${t(cat.i18n)}
             </button>`
         ).join('');
     }
@@ -1963,15 +2347,20 @@
         }
         empty.classList.add('hidden');
 
+        const isEn = window.currentLang === 'en';
+
         grid.innerHTML = filtered.map(source => {
             const catLabels = source.categories.map(c => {
                 const cat = CATEGORIES.dataType.find(d => d.id === c);
-                return cat ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-geo-bg border border-geo-border text-geo-muted"><i class="fas ${cat.icon}" style="font-size:10px"></i>${cat.label}</span>` : '';
+                return cat ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-geo-bg border border-geo-border text-geo-muted"><i class="fas ${cat.icon}" style="font-size:10px"></i>${t(cat.i18n)}</span>` : '';
             }).join('');
 
-            const accessLabel = source.access === 'free' ? '<span class="text-geo-green text-xs"><i class="fas fa-lock-open mr-1"></i>免费</span>' :
-                               source.access === 'registration' ? '<span class="text-geo-orange text-xs"><i class="fas fa-user-plus mr-1"></i>需注册</span>' :
-                               '<span class="text-geo-blue text-xs"><i class="fas fa-code mr-1"></i>API</span>';
+            const accessLabel = source.access === 'free' ? `<span class="text-geo-green text-xs"><i class="fas fa-lock-open mr-1"></i>${t('sources.free')}</span>` :
+                               source.access === 'registration' ? `<span class="text-geo-orange text-xs"><i class="fas fa-user-plus mr-1"></i>${t('sources.reg')}</span>` :
+                               `<span class="text-geo-blue text-xs"><i class="fas fa-code mr-1"></i>${t('sources.api')}</span>`;
+
+            const displayName = isEn ? source.name : source.nameCN;
+            const subName = isEn ? source.nameCN : source.name;
 
             return `<a href="${source.url}" target="_blank" rel="noopener noreferrer" class="source-card block rounded-xl bg-geo-card border border-geo-border p-4 cursor-pointer no-underline text-inherit">
                 <div class="flex items-start justify-between mb-3">
@@ -1980,8 +2369,8 @@
                             <i class="fas ${source.icon}"></i>
                         </div>
                         <div>
-                            <h3 class="font-medium text-sm">${source.nameCN}</h3>
-                            <p class="text-xs text-geo-dim">${source.name}</p>
+                            <h3 class="font-medium text-sm">${displayName}</h3>
+                            <p class="text-xs text-geo-dim">${subName}</p>
                         </div>
                     </div>
                     ${accessLabel}
@@ -2005,7 +2394,7 @@
         if (window.appState.gdalLoaded || window.appState.gdalLoading) return;
         window.appState.gdalLoading = true;
         const statusEl = document.getElementById('gdalStatus');
-        statusEl.innerHTML = `<div class="pulse-dot bg-geo-orange"></div><span class="text-sm text-geo-muted">正在加载 GDAL WebAssembly 模块（约 25MB，首次加载较慢）...</span>`;
+        statusEl.innerHTML = `<div class="pulse-dot bg-geo-orange"></div><span class="text-sm text-geo-muted">${t('preprocess.gdalLoading')}</span>`;
 
         try {
             const script = document.createElement('script');
@@ -2034,10 +2423,10 @@
                 );
             }
 
-            showToast('GDAL WebAssembly 加载成功', 'success');
+            showToast(t('toast.gdalReady'), 'success');
         } catch (err) {
             statusEl.innerHTML = `<div class="pulse-dot bg-geo-red"></div><span class="text-sm text-geo-red"><i class="fas fa-exclamation-circle mr-1"></i>GDAL 加载失败: ${err.message}</span>`;
-            showToast('GDAL 加载失败，请刷新重试', 'error');
+            showToast(t('toast.gdalFail'), 'error');
         }
         window.appState.gdalLoading = false;
     }
@@ -2089,14 +2478,14 @@
 
         const bands = info.bands || [];
         const meta = [
-            ['文件名', file.name],
-            ['文件大小', formatFileSize(file.size)],
-            ['格式', info.driverShortName || '未知'],
-            ['尺寸', `${info.width} × ${info.height} 像素`],
-            ['波段数', bands.length],
-            ['数据类型', bands[0]?.type || '未知'],
-            ['坐标系', info.spatialRef || '未知'],
-            ['分辨率', info.geoTransform ? `${info.geoTransform[1].toFixed(4)} × ${Math.abs(info.geoTransform[5]).toFixed(4)}` : '未知']
+            [t('file.name'), file.name],
+            [t('file.size'), formatFileSize(file.size)],
+            [t('file.format'), info.driverShortName || '未知'],
+            [t('file.dim'), `${info.width} × ${info.height} px`],
+            [t('file.bands'), bands.length],
+            [t('file.dtype'), bands[0]?.type || '未知'],
+            [t('file.crs'), info.spatialRef || '未知'],
+            [t('file.res'), info.geoTransform ? `${info.geoTransform[1].toFixed(4)} × ${Math.abs(info.geoTransform[5]).toFixed(4)}` : '未知']
         ];
 
         content.innerHTML = meta.map(([k, v]) =>
@@ -2120,16 +2509,16 @@
         window.appState.currentFile = null;
         window.appState.currentDataset = null;
         document.getElementById('fileInfoPanel').classList.add('hidden');
-        document.getElementById('toolContent').innerHTML = `<div class="text-center py-12 text-geo-dim"><i class="fas fa-tools text-3xl mb-3"></i><p class="text-sm">请先上传文件，然后选择处理工具</p></div>`;
+        document.getElementById('toolContent').innerHTML = `<div class="text-center py-12 text-geo-dim"><i class="fas fa-tools text-3xl mb-3"></i><p class="text-sm">${t('preprocess.toolPlaceholder')}</p></div>`;
         document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
         window.appState.currentTool = null;
-        showToast('文件已移除', 'info');
+        showToast(t('toast.fileRemoved'), 'info');
     }
 
     // Tool selection
     function selectTool(tool) {
-        if (!window.appState.gdalLoaded) { showToast('请等待 GDAL 加载完成', 'info'); return; }
-        if (!window.appState.currentDataset) { showToast('请先上传文件', 'info'); return; }
+        if (!window.appState.gdalLoaded) { showToast(t('toast.waitGdal'), 'info'); return; }
+        if (!window.appState.currentDataset) { showToast(t('toast.uploadFirst'), 'info'); return; }
 
         window.appState.currentTool = tool;
         document.querySelectorAll('.tool-btn').forEach(b => b.classList.toggle('active', b.dataset.tool === tool));
@@ -2212,17 +2601,17 @@
 
     function renderFormatTool() {
         const formats = ['GTiff', 'COG', 'PNG', 'JPEG', 'ENVI', 'AAIGrid', 'NetCDF', 'HFA'];
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-exchange-alt text-geo-blue mr-2"></i>格式转换</h3>
-            <p class="text-xs text-geo-muted mb-4">将当前文件转换为目标格式</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-exchange-alt text-geo-blue mr-2"></i>${t('fmt.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('fmt.desc')}</p>
             <div class="space-y-3">
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">输出格式</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('fmt.output')}</label>
                     <select id="outputFormat" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                         ${formats.map(f => `<option value="${f}">${f}</option>`).join('')}
                     </select>
                 </div>
                 <button onclick="executeFormatConvert()" class="w-full py-2.5 bg-geo-blue text-white rounded-lg text-sm hover:bg-geo-blue/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>执行转换
+                    <i class="fas fa-play mr-2"></i>${t('fmt.execute')}
                 </button>
             </div>`;
     }
@@ -2230,54 +2619,54 @@
     function renderClipTool(info) {
         const gt = info.geoTransform;
         const defaultBounds = gt ? [gt[0], gt[3], gt[0] + gt[1] * info.width, gt[3] + gt[5] * info.height] : [0, 0, 100, 100];
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-crop-alt text-geo-blue mr-2"></i>按范围裁剪</h3>
-            <p class="text-xs text-geo-muted mb-4">输入裁剪范围的坐标（左上角 X, Y 和右下角 X, Y）</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-crop-alt text-geo-blue mr-2"></i>${t('clip.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('clip.desc')}</p>
             <div class="grid grid-cols-2 gap-3 mb-4">
-                <div><label class="text-xs text-geo-dim mb-1 block">左上 X (ULX)</label><input id="clipUlx" type="number" step="any" value="${defaultBounds[0].toFixed(6)}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
-                <div><label class="text-xs text-geo-dim mb-1 block">左上 Y (ULY)</label><input id="clipUly" type="number" step="any" value="${defaultBounds[1].toFixed(6)}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
-                <div><label class="text-xs text-geo-dim mb-1 block">右下 X (LRX)</label><input id="clipLrx" type="number" step="any" value="${defaultBounds[2].toFixed(6)}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
-                <div><label class="text-xs text-geo-dim mb-1 block">右下 Y (LRY)</label><input id="clipLry" type="number" step="any" value="${defaultBounds[3].toFixed(6)}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
+                <div><label class="text-xs text-geo-dim mb-1 block">${t('clip.ulx')}</label><input id="clipUlx" type="number" step="any" value="${defaultBounds[0].toFixed(6)}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
+                <div><label class="text-xs text-geo-dim mb-1 block">${t('clip.uly')}</label><input id="clipUly" type="number" step="any" value="${defaultBounds[1].toFixed(6)}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
+                <div><label class="text-xs text-geo-dim mb-1 block">${t('clip.lrx')}</label><input id="clipLrx" type="number" step="any" value="${defaultBounds[2].toFixed(6)}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
+                <div><label class="text-xs text-geo-dim mb-1 block">${t('clip.lry')}</label><input id="clipLry" type="number" step="any" value="${defaultBounds[3].toFixed(6)}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
             </div>
             <button onclick="executeClip()" class="w-full py-2.5 bg-geo-blue text-white rounded-lg text-sm hover:bg-geo-blue/80 transition-colors">
-                <i class="fas fa-play mr-2"></i>执行裁剪
+                <i class="fas fa-play mr-2"></i>${t('clip.execute')}
             </button>`;
     }
 
     function renderReprojectTool(info) {
         const currentEPSG = info.spatialRef ? info.spatialRef.match(/EPSG[:\s]*(\d+)/i) : null;
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-globe text-geo-blue mr-2"></i>重投影</h3>
-            <p class="text-xs text-geo-muted mb-4">将影像转换到目标坐标参考系</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-globe text-geo-blue mr-2"></i>${t('reproj.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('reproj.desc')}</p>
             <div class="space-y-3">
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">当前坐标系</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('reproj.current')}</label>
                     <input type="text" value="${currentEPSG ? 'EPSG:' + currentEPSG[1] : (info.spatialRef || '未知')}" disabled class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-dim">
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">目标 EPSG 代码</label>
-                    <input id="targetEPSG" type="text" value="4326" placeholder="例如: 4326 (WGS84)" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono">
+                    <label class="text-xs text-geo-dim mb-1 block">${t('reproj.target')}</label>
+                    <input id="targetEPSG" type="text" value="4326" placeholder="e.g. 4326 (WGS84)" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono">
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">重采样方法</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('reproj.method')}</label>
                     <select id="reprojMethod" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
-                        <option value="nearest">最近邻</option>
-                        <option value="bilinear" selected>双线性</option>
-                        <option value="cubic">三次卷积</option>
-                        <option value="cubicspline">三次样条</option>
-                        <option value="lanczos">Lanczos</option>
+                        <option value="nearest">${t('reproj.nearest')}</option>
+                        <option value="bilinear" selected>${t('reproj.bilinear')}</option>
+                        <option value="cubic">${t('reproj.cubic')}</option>
+                        <option value="cubicspline">${t('reproj.cubicspline')}</option>
+                        <option value="lanczos">${t('reproj.lanczos')}</option>
                     </select>
                 </div>
                 <button onclick="executeReproject()" class="w-full py-2.5 bg-geo-blue text-white rounded-lg text-sm hover:bg-geo-blue/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>执行重投影
+                    <i class="fas fa-play mr-2"></i>${t('reproj.execute')}
                 </button>
             </div>`;
     }
 
     function renderBandsTool(bands) {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-layer-group text-geo-blue mr-2"></i>波段提取</h3>
-            <p class="text-xs text-geo-muted mb-4">选择要提取的波段（按住 Ctrl/Cmd 多选）</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-layer-group text-geo-blue mr-2"></i>${t('bands.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('bands.desc')}</p>
             <div class="space-y-3">
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">选择波段</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('bands.select')}</label>
                     <div class="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto p-2 bg-geo-bg rounded-lg border border-geo-border">
                         ${bands.map((b, i) => `<label class="flex items-center gap-2 p-2 rounded hover:bg-geo-hover cursor-pointer">
                             <input type="checkbox" value="${i + 1}" class="band-checkbox accent-geo-blue" ${i < 3 ? 'checked' : ''}>
@@ -2286,7 +2675,7 @@
                     </div>
                 </div>
                 <button onclick="executeBandExtract()" class="w-full py-2.5 bg-geo-blue text-white rounded-lg text-sm hover:bg-geo-blue/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>执行提取
+                    <i class="fas fa-play mr-2"></i>${t('bands.execute')}
                 </button>
             </div>`;
     }
@@ -2294,51 +2683,51 @@
     function renderResampleTool(info) {
         const gt = info.geoTransform;
         const currentRes = gt ? `${gt[1].toFixed(4)} × ${Math.abs(gt[5]).toFixed(4)}` : '未知';
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-th text-geo-blue mr-2"></i>重采样</h3>
-            <p class="text-xs text-geo-muted mb-4">调整影像分辨率</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-th text-geo-blue mr-2"></i>${t('resamp.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('resamp.desc')}</p>
             <div class="space-y-3">
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">当前分辨率</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('resamp.current')}</label>
                     <input type="text" value="${currentRes}" disabled class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-dim font-mono">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
-                    <div><label class="text-xs text-geo-dim mb-1 block">X 分辨率</label><input id="resX" type="number" step="any" value="${gt ? gt[1] * 2 : 30}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
-                    <div><label class="text-xs text-geo-dim mb-1 block">Y 分辨率</label><input id="resY" type="number" step="any" value="${gt ? Math.abs(gt[5]) * 2 : 30}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
+                    <div><label class="text-xs text-geo-dim mb-1 block">${t('resamp.x')}</label><input id="resX" type="number" step="any" value="${gt ? gt[1] * 2 : 30}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
+                    <div><label class="text-xs text-geo-dim mb-1 block">${t('resamp.y')}</label><input id="resY" type="number" step="any" value="${gt ? Math.abs(gt[5]) * 2 : 30}" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono"></div>
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">重采样方法</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('resamp.method')}</label>
                     <select id="resampleMethod" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
-                        <option value="nearest">最近邻</option>
-                        <option value="bilinear" selected>双线性</option>
-                        <option value="cubic">三次卷积</option>
-                        <option value="cubicspline">三次样条</option>
-                        <option value="lanczos">Lanczos</option>
-                        <option value="average">平均</option>
-                        <option value="mode">众数</option>
+                        <option value="nearest">${t('reproj.nearest')}</option>
+                        <option value="bilinear" selected>${t('reproj.bilinear')}</option>
+                        <option value="cubic">${t('reproj.cubic')}</option>
+                        <option value="cubicspline">${t('reproj.cubicspline')}</option>
+                        <option value="lanczos">${t('reproj.lanczos')}</option>
+                        <option value="average">${t('reproj.average')}</option>
+                        <option value="mode">${t('reproj.mode')}</option>
                     </select>
                 </div>
                 <button onclick="executeResample()" class="w-full py-2.5 bg-geo-blue text-white rounded-lg text-sm hover:bg-geo-blue/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>执行重采样
+                    <i class="fas fa-play mr-2"></i>${t('resamp.execute')}
                 </button>
             </div>`;
     }
 
     function renderCalibrateTool(bands) {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-sliders-h text-geo-blue mr-2"></i>辐射定标</h3>
-            <p class="text-xs text-geo-muted mb-4">将 DN 值转换为辐射亮度或表观反射率</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-sliders-h text-geo-blue mr-2"></i>${t('cal.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('cal.desc')}</p>
             <div class="space-y-3">
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">定标类型</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('cal.type')}</label>
                     <select id="calibType" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
-                        <option value="toa">表观反射率 (TOA)</option>
-                        <option value="radiance">辐射亮度</option>
+                        <option value="toa">${t('cal.toa')}</option>
+                        <option value="radiance">${t('cal.radiance')}</option>
                     </select>
                 </div>
                 <div class="p-3 bg-geo-bg rounded-lg border border-geo-border">
-                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>使用 gdal_translate 的 -scale 参数进行线性变换。如需精确的辐射定标，请参考各卫星的定标参数手册。</p>
+                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>${t('cal.info')}</p>
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">输出数据类型</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('cal.output')}</label>
                     <select id="calibOutputType" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                         <option value="Float32">Float32</option>
                         <option value="Float64">Float64</option>
@@ -2346,271 +2735,271 @@
                     </select>
                 </div>
                 <button onclick="executeCalibrate()" class="w-full py-2.5 bg-geo-blue text-white rounded-lg text-sm hover:bg-geo-blue/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>执行辐射定标
+                    <i class="fas fa-play mr-2"></i>${t('cal.execute')}
                 </button>
             </div>`;
     }
 
     function renderNdviTool(bands) {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-leaf text-geo-green mr-2"></i>NDVI 计算</h3>
-            <p class="text-xs text-geo-muted mb-4">归一化植被指数: NDVI = (NIR - Red) / (NIR + Red)</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-leaf text-geo-green mr-2"></i>${t('ndvi.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('ndvi.desc')}</p>
             <div class="space-y-3">
                 <div class="p-3 bg-geo-bg rounded-lg border border-geo-border">
-                    <p class="text-xs text-geo-dim mb-2"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>当前文件共 ${bands.length} 个波段，请选择红光波段和近红外波段</p>
-                    <p class="text-xs text-geo-dim">常见卫星波段对照：Sentinel-2: B4(红), B8(近红外) | Landsat-8: B4(红), B5(近红外)</p>
+                    <p class="text-xs text-geo-dim mb-2"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>${t('ndvi.info', {n: bands.length})}</p>
+                    <p class="text-xs text-geo-dim">${t('ndvi.ref')}</p>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">红光波段 (Red)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('ndvi.red')}</label>
                         <select id="ndviRed" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                             ${bands.map((b, i) => `<option value="${i}" ${i === 3 ? 'selected' : ''}>Band ${i + 1}</option>`).join('')}
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">近红外波段 (NIR)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('ndvi.nir')}</label>
                         <select id="ndviNir" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                             ${bands.map((b, i) => `<option value="${i}" ${i === 4 ? 'selected' : ''}>Band ${i + 1}</option>`).join('')}
                         </select>
                     </div>
                 </div>
                 <div id="ndviPreview" class="hidden">
-                    <label class="text-xs text-geo-dim mb-1 block">NDVI 预览</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('ndvi.preview')}</label>
                     <canvas id="ndviCanvas" class="w-full rounded-lg border border-geo-border"></canvas>
                     <div class="mt-2">
                         <div class="ndvi-colorbar"></div>
                         <div class="flex justify-between text-xs text-geo-dim mt-1">
-                            <span>-1 (无植被)</span>
+                            <span>${t('ndvi.low')}</span>
                             <span>0</span>
-                            <span>+1 (密集植被)</span>
+                            <span>${t('ndvi.high')}</span>
                         </div>
                     </div>
                 </div>
                 <button onclick="executeNDVI()" class="w-full py-2.5 bg-geo-green text-white rounded-lg text-sm hover:bg-geo-green/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>计算 NDVI
+                    <i class="fas fa-play mr-2"></i>${t('ndvi.execute')}
                 </button>
             </div>`;
     }
 
     function renderEviTool(bands) {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-seedling text-geo-green mr-2"></i>EVI 计算</h3>
-            <p class="text-xs text-geo-muted mb-4">增强植被指数: EVI = 2.5 × (NIR - Red) / (NIR + 6×Red - 7.5×Blue + 1)</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-seedling text-geo-green mr-2"></i>${t('evi.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('evi.desc')}</p>
             <div class="space-y-3">
                 <div class="p-3 bg-geo-bg rounded-lg border border-geo-border">
-                    <p class="text-xs text-geo-dim mb-2"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>当前文件共 ${bands.length} 个波段，请选择蓝光、红光和近红外波段</p>
-                    <p class="text-xs text-geo-dim">常见卫星波段对照：Sentinel-2: B2(蓝), B4(红), B8(近红外) | Landsat-8: B2(蓝), B4(红), B5(近红外)</p>
+                    <p class="text-xs text-geo-dim mb-2"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>${t('evi.info', {n: bands.length})}</p>
+                    <p class="text-xs text-geo-dim">${t('evi.ref')}</p>
                 </div>
                 <div class="grid grid-cols-3 gap-3">
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">蓝光波段 (Blue)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('evi.blue')}</label>
                         <select id="eviBlue" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                             ${bands.map((b, i) => `<option value="${i}" ${i === 1 ? 'selected' : ''}>Band ${i + 1}</option>`).join('')}
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">红光波段 (Red)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('evi.red')}</label>
                         <select id="eviRed" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                             ${bands.map((b, i) => `<option value="${i}" ${i === 3 ? 'selected' : ''}>Band ${i + 1}</option>`).join('')}
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">近红外波段 (NIR)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('evi.nir')}</label>
                         <select id="eviNir" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                             ${bands.map((b, i) => `<option value="${i}" ${i === 4 ? 'selected' : ''}>Band ${i + 1}</option>`).join('')}
                         </select>
                     </div>
                 </div>
                 <div id="eviPreview" class="hidden">
-                    <label class="text-xs text-geo-dim mb-1 block">EVI 预览</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('evi.preview')}</label>
                     <canvas id="eviCanvas" class="w-full rounded-lg border border-geo-border"></canvas>
                     <div class="mt-2">
                         <div class="evi-colorbar"></div>
                         <div class="flex justify-between text-xs text-geo-dim mt-1">
-                            <span>0 (无植被)</span>
+                            <span>${t('evi.low')}</span>
                             <span>0.5</span>
-                            <span>+1 (密集植被)</span>
+                            <span>${t('evi.high')}</span>
                         </div>
                     </div>
                 </div>
                 <button onclick="executeEVI()" class="w-full py-2.5 bg-geo-green text-white rounded-lg text-sm hover:bg-geo-green/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>计算 EVI
+                    <i class="fas fa-play mr-2"></i>${t('evi.execute')}
                 </button>
             </div>`;
     }
 
     function renderNdwiTool(bands) {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-water text-geo-blue mr-2"></i>NDWI 计算</h3>
-            <p class="text-xs text-geo-muted mb-4">归一化水体指数: NDWI = (Green - NIR) / (Green + NIR)</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-water text-geo-blue mr-2"></i>${t('ndwi.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('ndwi.desc')}</p>
             <div class="space-y-3">
                 <div class="p-3 bg-geo-bg rounded-lg border border-geo-border">
-                    <p class="text-xs text-geo-dim mb-2"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>当前文件共 ${bands.length} 个波段，请选择绿光波段和近红外波段</p>
-                    <p class="text-xs text-geo-dim">常见卫星波段对照：Sentinel-2: B3(绿), B8(近红外) | Landsat-8: B3(绿), B5(近红外)</p>
+                    <p class="text-xs text-geo-dim mb-2"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>${t('ndwi.info', {n: bands.length})}</p>
+                    <p class="text-xs text-geo-dim">${t('ndwi.ref')}</p>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">绿光波段 (Green)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('ndwi.green')}</label>
                         <select id="ndwiGreen" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                             ${bands.map((b, i) => `<option value="${i}" ${i === 2 ? 'selected' : ''}>Band ${i + 1}</option>`).join('')}
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">近红外波段 (NIR)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('ndwi.nir')}</label>
                         <select id="ndwiNir" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                             ${bands.map((b, i) => `<option value="${i}" ${i === 4 ? 'selected' : ''}>Band ${i + 1}</option>`).join('')}
                         </select>
                     </div>
                 </div>
                 <div id="ndwiPreview" class="hidden">
-                    <label class="text-xs text-geo-dim mb-1 block">NDWI 预览</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('ndwi.preview')}</label>
                     <canvas id="ndwiCanvas" class="w-full rounded-lg border border-geo-border"></canvas>
                     <div class="mt-2">
                         <div class="ndwi-colorbar"></div>
                         <div class="flex justify-between text-xs text-geo-dim mt-1">
-                            <span>-1 (无水体)</span>
+                            <span>${t('ndwi.low')}</span>
                             <span>0</span>
-                            <span>+1 (水体)</span>
+                            <span>${t('ndwi.high')}</span>
                         </div>
                     </div>
                 </div>
                 <button onclick="executeNDWI()" class="w-full py-2.5 bg-geo-blue text-white rounded-lg text-sm hover:bg-geo-blue/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>计算 NDWI
+                    <i class="fas fa-play mr-2"></i>${t('ndwi.execute')}
                 </button>
             </div>`;
     }
 
     function renderSaviTool(bands) {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-mountain text-geo-orange mr-2"></i>SAVI 计算</h3>
-            <p class="text-xs text-geo-muted mb-4">土壤调节植被指数: SAVI = (NIR - Red) / (NIR + Red + L) × (1 + L)</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-mountain text-geo-orange mr-2"></i>${t('savi.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('savi.desc')}</p>
             <div class="space-y-3">
                 <div class="p-3 bg-geo-bg rounded-lg border border-geo-border">
-                    <p class="text-xs text-geo-dim mb-2"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>当前文件共 ${bands.length} 个波段，请选择红光波段和近红外波段</p>
-                    <p class="text-xs text-geo-dim">SAVI 适用于植被覆盖度较低的区域，L 值通常取 0.5</p>
+                    <p class="text-xs text-geo-dim mb-2"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>${t('savi.info', {n: bands.length})}</p>
+                    <p class="text-xs text-geo-dim">${t('savi.ref')}</p>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">红光波段 (Red)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('savi.red')}</label>
                         <select id="saviRed" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                             ${bands.map((b, i) => `<option value="${i}" ${i === 3 ? 'selected' : ''}>Band ${i + 1}</option>`).join('')}
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">近红外波段 (NIR)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('savi.nir')}</label>
                         <select id="saviNir" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                             ${bands.map((b, i) => `<option value="${i}" ${i === 4 ? 'selected' : ''}>Band ${i + 1}</option>`).join('')}
                         </select>
                     </div>
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">土壤亮度校正因子 (L)</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('savi.L')}</label>
                     <input id="saviL" type="number" step="0.1" value="0.5" min="0" max="1" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono">
                 </div>
                 <div id="saviPreview" class="hidden">
-                    <label class="text-xs text-geo-dim mb-1 block">SAVI 预览</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('savi.preview')}</label>
                     <canvas id="saviCanvas" class="w-full rounded-lg border border-geo-border"></canvas>
                     <div class="mt-2">
                         <div class="savi-colorbar"></div>
                         <div class="flex justify-between text-xs text-geo-dim mt-1">
-                            <span>-1 (无植被)</span>
+                            <span>${t('savi.low')}</span>
                             <span>0</span>
-                            <span>+1 (密集植被)</span>
+                            <span>${t('savi.high')}</span>
                         </div>
                     </div>
                 </div>
                 <button onclick="executeSAVI()" class="w-full py-2.5 bg-geo-orange text-white rounded-lg text-sm hover:bg-geo-orange/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>计算 SAVI
+                    <i class="fas fa-play mr-2"></i>${t('savi.execute')}
                 </button>
             </div>`;
     }
 
     function renderHistogramTool() {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-chart-bar text-geo-purple mr-2"></i>直方图均衡化</h3>
-            <p class="text-xs text-geo-muted mb-4">增强图像对比度，使像素值分布更加均匀</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-chart-bar text-geo-purple mr-2"></i>${t('hist.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('hist.desc')}</p>
             <div class="space-y-3">
                 <div class="p-3 bg-geo-bg rounded-lg border border-geo-border">
-                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>直方图均衡化可以增强图像的对比度，特别适用于对比度较低的遥感影像。处理后像素值分布将更加均匀。</p>
+                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>${t('hist.info')}</p>
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">应用波段</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('hist.band')}</label>
                     <select id="histBand" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
-                        <option value="all">所有波段</option>
-                        <option value="rgb">RGB 合成</option>
+                        <option value="all">${t('hist.all')}</option>
+                        <option value="rgb">${t('hist.rgb')}</option>
                     </select>
                 </div>
                 <button onclick="executeHistogram()" class="w-full py-2.5 bg-geo-purple text-white rounded-lg text-sm hover:bg-geo-purple/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>执行直方图均衡化
+                    <i class="fas fa-play mr-2"></i>${t('hist.execute')}
                 </button>
             </div>`;
     }
 
     function renderStretchTool() {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-arrows-alt-h text-geo-orange mr-2"></i>对比度拉伸</h3>
-            <p class="text-xs text-geo-muted mb-4">线性拉伸像素值范围，去除异常值影响</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-arrows-alt-h text-geo-orange mr-2"></i>${t('stretch.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('stretch.desc')}</p>
             <div class="space-y-3">
                 <div class="p-3 bg-geo-bg rounded-lg border border-geo-border">
-                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>对比度拉伸将像素值线性映射到 0-255 范围，可以选择去除两端的异常值百分比。</p>
+                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>${t('stretch.info')}</p>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">下限百分比 (%)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('stretch.low')}</label>
                         <input id="stretchLow" type="number" step="1" value="2" min="0" max="50" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono">
                     </div>
                     <div>
-                        <label class="text-xs text-geo-dim mb-1 block">上限百分比 (%)</label>
+                        <label class="text-xs text-geo-dim mb-1 block">${t('stretch.high')}</label>
                         <input id="stretchHigh" type="number" step="1" value="98" min="50" max="100" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue font-mono">
                     </div>
                 </div>
                 <button onclick="executeStretch()" class="w-full py-2.5 bg-geo-orange text-white rounded-lg text-sm hover:bg-geo-orange/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>执行对比度拉伸
+                    <i class="fas fa-play mr-2"></i>${t('stretch.execute')}
                 </button>
             </div>`;
     }
 
     function renderSharpenTool() {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-magic text-geo-red mr-2"></i>锐化</h3>
-            <p class="text-xs text-geo-muted mb-4">增强图像边缘和细节，提高清晰度</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-magic text-geo-red mr-2"></i>${t('sharpen.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('sharpen.desc')}</p>
             <div class="space-y-3">
                 <div class="p-3 bg-geo-bg rounded-lg border border-geo-border">
-                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>锐化处理可以增强图像的边缘和细节，使图像更加清晰。选择合适的锐化强度可以避免过度增强噪声。</p>
+                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>${t('sharpen.info')}</p>
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">锐化方法</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('sharpen.method')}</label>
                     <select id="sharpenMethod" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
-                        <option value="laplacian">拉普拉斯锐化</option>
-                        <option value="unsharp">反锐化掩模</option>
-                        <option value="sobel">Sobel 边缘增强</option>
+                        <option value="laplacian">${t('sharpen.laplacian')}</option>
+                        <option value="unsharp">${t('sharpen.unsharp')}</option>
+                        <option value="sobel">${t('sharpen.sobel')}</option>
                     </select>
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">锐化强度</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('sharpen.strength')}</label>
                     <input id="sharpenStrength" type="range" min="0.5" max="3" step="0.1" value="1" class="w-full">
                     <div class="flex justify-between text-xs text-geo-dim mt-1">
-                        <span>弱</span>
-                        <span>中</span>
-                        <span>强</span>
+                        <span>${t('sharpen.weak')}</span>
+                        <span>${t('sharpen.mid')}</span>
+                        <span>${t('sharpen.strong')}</span>
                     </div>
                 </div>
                 <button onclick="executeSharpen()" class="w-full py-2.5 bg-geo-red text-white rounded-lg text-sm hover:bg-geo-red/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>执行锐化
+                    <i class="fas fa-play mr-2"></i>${t('sharpen.execute')}
                 </button>
             </div>`;
     }
 
     function renderLowpassTool() {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-smooth text-geo-blue mr-2"></i>低通滤波</h3>
-            <p class="text-xs text-geo-muted mb-4">平滑图像，去除噪声和细节</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-smooth text-geo-blue mr-2"></i>${t('lowpass.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('lowpass.desc')}</p>
             <div class="space-y-3">
                 <div class="p-3 bg-geo-bg rounded-lg border border-geo-border">
-                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>低通滤波可以平滑图像，去除高频噪声，但也会使图像变得模糊。适用于去噪和图像预处理。</p>
+                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>${t('lowpass.info')}</p>
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">滤波方法</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('lowpass.method')}</label>
                     <select id="lowpassMethod" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
-                        <option value="mean">均值滤波</option>
-                        <option value="gaussian">高斯滤波</option>
-                        <option value="median">中值滤波</option>
+                        <option value="mean">${t('lowpass.mean')}</option>
+                        <option value="gaussian">${t('lowpass.gaussian')}</option>
+                        <option value="median">${t('lowpass.median')}</option>
                     </select>
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">滤波核大小</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('lowpass.kernel')}</label>
                     <select id="lowpassKernel" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                         <option value="3">3×3</option>
                         <option value="5" selected>5×5</option>
@@ -2619,29 +3008,29 @@
                     </select>
                 </div>
                 <button onclick="executeLowpass()" class="w-full py-2.5 bg-geo-blue text-white rounded-lg text-sm hover:bg-geo-blue/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>执行低通滤波
+                    <i class="fas fa-play mr-2"></i>${t('lowpass.execute')}
                 </button>
             </div>`;
     }
 
     function renderHighpassTool() {
-        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-edge text-geo-green mr-2"></i>高通滤波</h3>
-            <p class="text-xs text-geo-muted mb-4">增强边缘和细节，提取高频信息</p>
+        return `<h3 class="text-sm font-medium mb-4"><i class="fas fa-edge text-geo-green mr-2"></i>${t('highpass.title')}</h3>
+            <p class="text-xs text-geo-muted mb-4">${t('highpass.desc')}</p>
             <div class="space-y-3">
                 <div class="p-3 bg-geo-bg rounded-lg border border-geo-border">
-                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>高通滤波可以增强图像的边缘和细节，提取高频信息。适用于边缘检测和图像增强。</p>
+                    <p class="text-xs text-geo-dim"><i class="fas fa-info-circle mr-1 text-geo-blue"></i>${t('highpass.info')}</p>
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">滤波方法</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('highpass.method')}</label>
                     <select id="highpassMethod" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
-                        <option value="laplacian">拉普拉斯滤波</option>
-                        <option value="sobel">Sobel 滤波</option>
-                        <option value="prewitt">Prewitt 滤波</option>
-                        <option value="canny">Canny 边缘检测</option>
+                        <option value="laplacian">${t('highpass.laplacian')}</option>
+                        <option value="sobel">${t('highpass.sobel')}</option>
+                        <option value="prewitt">${t('highpass.prewitt')}</option>
+                        <option value="canny">${t('highpass.canny')}</option>
                     </select>
                 </div>
                 <div>
-                    <label class="text-xs text-geo-dim mb-1 block">滤波核大小</label>
+                    <label class="text-xs text-geo-dim mb-1 block">${t('highpass.kernel')}</label>
                     <select id="highpassKernel" class="w-full px-3 py-2 bg-geo-bg border border-geo-border rounded-lg text-sm text-geo-text focus:outline-none focus:border-geo-blue">
                         <option value="3" selected>3×3</option>
                         <option value="5">5×5</option>
@@ -2649,14 +3038,14 @@
                     </select>
                 </div>
                 <button onclick="executeHighpass()" class="w-full py-2.5 bg-geo-green text-white rounded-lg text-sm hover:bg-geo-green/80 transition-colors">
-                    <i class="fas fa-play mr-2"></i>执行高通滤波
+                    <i class="fas fa-play mr-2"></i>${t('highpass.execute')}
                 </button>
             </div>`;
     }
 
     // Execute functions
     async function executeWithGDAL(fn, operationName) {
-        if (!window.appState.gdalLoaded) { showToast('GDAL 未加载', 'error'); return; }
+        if (!window.appState.gdalLoaded) { showToast(t('toast.gdalNotReady'), 'error'); return; }
         showProcessing(`正在执行${operationName}...`);
         await new Promise(r => setTimeout(r, 50));
         try {
@@ -2681,7 +3070,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_${format.toLowerCase()}.tif`);
-            showToast('格式转换完成', 'success');
+            showToast(t('toast.formatDone'), 'success');
         }, '格式转换');
     }
 
@@ -2698,7 +3087,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_clipped.tif`);
-            showToast('裁剪完成', 'success');
+            showToast(t('toast.clipDone'), 'success');
         }, '裁剪');
     }
 
@@ -2713,7 +3102,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_EPSG${epsg}.tif`);
-            showToast('重投影完成', 'success');
+            showToast(t('toast.reprojDone'), 'success');
         }, '重投影');
     }
 
@@ -2731,7 +3120,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_bands${bandNums.join('')}.tif`);
-            showToast('波段提取完成', 'success');
+            showToast(t('toast.bandDone'), 'success');
         }, '波段提取');
     }
 
@@ -2747,7 +3136,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_resampled.tif`);
-            showToast('重采样完成', 'success');
+            showToast(t('toast.resampDone'), 'success');
         }, '重采样');
     }
 
@@ -2761,7 +3150,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_calibrated.tif`);
-            showToast('辐射定标完成（使用默认 -scale 参数，精确定标请参考卫星手册）', 'success');
+            showToast(t('toast.calDone'), 'success');
         }, '辐射定标');
     }
 
@@ -2845,7 +3234,7 @@
             downloadBlob(outputBuffer, `${baseName}_NDVI.tif`);
 
             addHistory('NDVI 计算', 'success');
-            showToast('NDVI 计算完成', 'success');
+            showToast(t('toast.ndviDone'), 'success');
         } catch (err) {
             showToast('NDVI 计算失败: ' + err.message, 'error');
             addHistory('NDVI 计算', 'error');
@@ -2935,7 +3324,7 @@
             downloadBlob(outputBuffer, `${baseName}_EVI.tif`);
 
             addHistory('EVI 计算', 'success');
-            showToast('EVI 计算完成', 'success');
+            showToast(t('toast.eviDone'), 'success');
         } catch (err) {
             showToast('EVI 计算失败: ' + err.message, 'error');
             addHistory('EVI 计算', 'error');
@@ -3020,7 +3409,7 @@
             downloadBlob(outputBuffer, `${baseName}_NDWI.tif`);
 
             addHistory('NDWI 计算', 'success');
-            showToast('NDWI 计算完成', 'success');
+            showToast(t('toast.ndwiDone'), 'success');
         } catch (err) {
             showToast('NDWI 计算失败: ' + err.message, 'error');
             addHistory('NDWI 计算', 'error');
@@ -3106,7 +3495,7 @@
             downloadBlob(outputBuffer, `${baseName}_SAVI.tif`);
 
             addHistory('SAVI 计算', 'success');
-            showToast('SAVI 计算完成', 'success');
+            showToast(t('toast.saviDone'), 'success');
         } catch (err) {
             showToast('SAVI 计算失败: ' + err.message, 'error');
             addHistory('SAVI 计算', 'error');
@@ -3124,7 +3513,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_histogram.tif`);
-            showToast('直方图均衡化完成', 'success');
+            showToast(t('toast.histDone'), 'success');
         }, '直方图均衡化');
     }
 
@@ -3140,7 +3529,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_stretched.tif`);
-            showToast('对比度拉伸完成', 'success');
+            showToast(t('toast.stretchDone'), 'success');
         }, '对比度拉伸');
     }
 
@@ -3162,7 +3551,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_sharpened.tif`);
-            showToast('锐化完成', 'success');
+            showToast(t('toast.sharpenDone'), 'success');
         }, '锐化');
     }
 
@@ -3184,7 +3573,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_lowpass.tif`);
-            showToast('低通滤波完成', 'success');
+            showToast(t('toast.lowpassDone'), 'success');
         }, '低通滤波');
     }
 
@@ -3199,7 +3588,7 @@
             const bytes = await Gdal.getFileBytes(output);
             const baseName = window.appState.currentFile.name.replace(/\.[^.]+$/, '');
             downloadBlob(bytes, `${baseName}_highpass.tif`);
-            showToast('高通滤波完成', 'success');
+            showToast(t('toast.highpassDone'), 'success');
         }, '高通滤波');
     }
 
